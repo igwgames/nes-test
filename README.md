@@ -144,7 +144,7 @@ See the section for `assertEqual` above. These work the same way.
 There is not much configuration for this module yet, but a few environment variables can customize behavior to help your debugging: 
 
 * `MESEN_EXE` - set this to the path to your mesen exe. By default, this will look in your current directory.
-* `DEBUG_OPEN_MESEN` - Open mesen and run a test in the script runner. (Note: enable a single test with `fit()` or behavior may be unpredictable!)
+* `DEBUG_OPEN_MESEN` - Set this to `true` to open mesen and run a test in the script runner. (Note: enable a single test with `fit()` or behavior may be unpredictable!)
 
 ## Gotchas with jasmine
 
