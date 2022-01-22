@@ -70,7 +70,7 @@ Run the program by calling it on the command line, with the relative path to you
 ```
 
 Note that this will create a `./nes-test-temp` folder in the same folder as the binary. This is needed to store lua files that
-Mesen runs. They are automaticlaly cleaned up as soon as the test run is complete.
+Mesen runs. They are automatically cleaned up as soon as the test run is complete.
 
 ### Special notes for linux
 
