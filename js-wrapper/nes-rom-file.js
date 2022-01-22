@@ -1,6 +1,6 @@
 const fs = require('fs'),
-    process = require('process'),
-    path = require('path');
+    path = require('path'),
+    getCallingPath = require('../util/get-calling-path');
 
 class NesRomFile {
 
@@ -8,7 +8,7 @@ class NesRomFile {
     romData = [];
 
     constructor(romFile) {
-        this.romFile = path.resolve(process.cwd(), romFile);
+        this.romFile = path.resolve(getCallingPath(), romFile);
 
         if (!fs.existsSync(this.romFile)) {
             throw new Error('Rom not found! -- ' + this.romFile);

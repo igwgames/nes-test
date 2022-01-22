@@ -2,7 +2,8 @@ const fs = require('fs'),
     process = require('process'),
     path = require('path'),
     uuid = require('uuid').v4,
-    childProcess = require('child_process');
+    childProcess = require('child_process'),
+    getCallingPath = require('../util/get-calling-path');
 
 // NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
 const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
@@ -23,7 +24,7 @@ class NesTestSequence {
     useTestRunner = !(process.env.DEBUG_OPEN_MESEN === 'true');
 
     constructor(romFile) {
-        this.romFile = path.resolve(process.cwd(), romFile);
+        this.romFile = path.resolve(getCallingPath(), romFile);
         this.testId = uuid();
         this.testFile = path.join(process.cwd(), 'nes-test-temp', `test-` + this.testId + '.lua')
 

@@ -22,23 +22,32 @@ More examples can be found in the `examples/` folder!
 ```javascript
 
     it('Validates that this is a valid NES rom', async () => {
-        romData = new NesRomFile('./examples/data/working-nrom.nes');
+        // Rom paths are relative to the test script
+        romData = new NesRomFile('./data/working-nrom.nes');
         expect(romData.hasValidHeader()).toEqual(true);
     });
 
     it('Successfully boots and sets the value at 0x2fe to 23', async () => {
 
-        const testSequence = new NesTestSequence('./scratchpad/rom/working.nes');
+        const testSequence = new NesTestSequence('./data/working-nrom.nes');
 
-        // Wait for intro screen to be dismissed
+        // Wait for the rom to allow input
         testSequence.runCpuFrames(60);
+        // Check that the rom has cleared this memory value before any input happens
         testSequence.assertEqual('Initial memory value is set to 0', NesTestSequence.getRamValue(0x2fe), 0);
+        // Press start to skip the intro screen of the rom
         testSequence.sendInput({start: true});
+        // Wait for the title screen to be drawn
         testSequence.runCpuFrames(30);
+        // Press start again to get past the title screen on the rom
+        // Once the user hits start, the game will trigger a write to memory addrexx 0x2fe
         testSequence.sendInput({start: true});
+        // Wait a few frames for the game to start
         testSequence.runCpuFrames(5);
+        // Test that the memory address was written as expected.
         testSequence.assertEqual('Memory value not set as expected', NesTestSequence.getRamValue(0x2fe), 23);
 
+        // Run mesen, and execute all of the tests written above
         await testSequence.run();
     });
 
@@ -82,8 +91,8 @@ I really need to write proper documentation. For now, here's a barebones version
 
 ### NesRom
 
-The NesRom tool allos you to inspect the contents of a rom file. The constructor requires the path to a rom, relative to the directory that the
-test runner binary starts from.
+The NesRom tool allos you to inspect the contents of a rom file. The constructor requires the path to a rom, relative to the current
+test file.
 
 ```javascript
 const rom = new NesRom('./roms/rom.nes');
@@ -111,7 +120,7 @@ and looking at memory addresses to see what values are set. You must create all 
 call `.run()` to execute the commands. Any assertions that fail will throw an exception - which will fail tests in jasmine
 and tell you which assertion failed. (You can use try/catch to override this)
 
-The one constructor parameter is the path to a rom file, relative to the directory that the test runner binary starts in.
+The one constructor parameter is the path to a rom file, relative to the current script file.
 
 ```javascript
 const sequence = new NesTestSequence('./roms/rom.nes');

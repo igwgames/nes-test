@@ -10,7 +10,7 @@ describe('Multiple spec test', () => {
     describe('Rom file data', () => {
 
         beforeEach(() => {
-            romData = new NesRomFile('./examples/data/working-nrom.nes');
+            romData = new NesRomFile('./data/working-nrom.nes');
         })
 
         it('Has a valid 16 byte header', async () => {
@@ -33,7 +33,7 @@ describe('Multiple spec test', () => {
     describe('Rom execution', () => {
         beforeEach(() => {
             // Create a new unique sequence for each test
-            testSequence = new NesTestSequence('./examples/data/working-nrom.nes');
+            testSequence = new NesTestSequence('./data/working-nrom.nes');
         });
         
         it('Clears all sprite memory at startup', async () => {

@@ -4,7 +4,7 @@ const NesTest = require('nes-test').NesTest;
 describe('Basic rom functionality', () => {
     it('Successfully boots and sets the value at 0x2fe to 23', async () => {
 
-        const testSequence = new NesTestSequence('./examples/data/working-nrom.nes');
+        const testSequence = new NesTestSequence('./data/working-nrom.nes');
 
         // Wait for intro screen to be dismissed
         testSequence.runCpuFrames(60);
