@@ -63,6 +63,19 @@ Run the program by calling it on the command line, with the relative path to you
 Note that this will create a `./nes-test-temp` folder in the same folder as the binary. This is needed to store lua files that
 Mesen runs. They are automaticlaly cleaned up as soon as the test run is complete.
 
+### Special notes for linux
+
+This program will work as expected with linux, however Mesen has a few special requirements to get it going. Namely, you'll need the
+following programs, which may be installed using apt or a similar package manager. 
+
+* mono-complete
+* libsdl2-2.0
+* gnome-themes-standard (You might be able to get away without this one if you only ever use the test runner)
+
+Find more information on running Mesen on linux here: https://github.com/SourMesen/Mesen#ubuntu 
+
+Otherwise follow all of the instructions in the above section. Yes, you really are going to run a .exe file on linux.
+
 ## Documentation
 
 I really need to write proper documentation. For now, here's a barebones version.
