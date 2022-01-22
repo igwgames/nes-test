@@ -4,8 +4,10 @@ const fs = require('fs'),
     uuid = require('uuid').v4,
     childProcess = require('child_process');
 
-const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen');
+// NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
+const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
 const needsMono = process.platform !== 'win32';
+
 
 class NesTestSequence {
 
