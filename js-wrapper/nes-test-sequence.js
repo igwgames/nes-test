@@ -119,7 +119,7 @@ class NesTestSequence {
 
         // Run mesen, get the result code
         const responseCode = await new Promise((resolve, reject) => {
-            const emu = childProcess.spawn(mesenExe, [...(needsMono ? ['mono'] : []), ...(this.useTestRunner ? ['--testrunner'] : []), this.romFile, this.testFile]);
+            const emu = childProcess.spawn(needsMono ? 'mono' : mesenExe, [...(needsMono ? [mesenExe] : []), ...(this.useTestRunner ? ['--testrunner'] : []), this.romFile, this.testFile]);
             
             // TODO: Slightly better error handling, print the message.
             emu.on('error', error => reject(error));
