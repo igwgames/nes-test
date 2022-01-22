@@ -4,7 +4,8 @@ const fs = require('fs'),
     uuid = require('uuid').v4,
     childProcess = require('child_process');
 
-const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'mesen');
+const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen');
+const needsMono = process.platform !== 'win32';
 
 class NesTestSequence {
 
@@ -48,9 +49,9 @@ class NesTestSequence {
     assertEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertEqual', '=='); }
     assertNotEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertNotEqual', '~='); }
     assertLessThan(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertLessThan', '<'); }
-    assertLessThanOrEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertLessThanOrEqual', '<='); }
+    assertLessThanOrEqualTo(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertLessThanOrEqualTo', '<='); }
     assertGreaterThan(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertGreaterThan', '>'); }
-    assertGreaterThanOrEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertGreaterThanOrEqual', '>='); }
+    assertGreaterThanOrEqualTo(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertGreaterThanOrEqualTo', '>='); }
 
 
     getRawResult() {
@@ -118,7 +119,7 @@ class NesTestSequence {
 
         // Run mesen, get the result code
         const responseCode = await new Promise((resolve, reject) => {
-            const emu = childProcess.spawn(mesenExe, [...(this.useTestRunner ? ['--testrunner'] : []), this.romFile, this.testFile]);
+            const emu = childProcess.spawn(mesenExe, [...(needsMono ? ['mono'] : []), ...(this.useTestRunner ? ['--testrunner'] : []), this.romFile, this.testFile]);
             
             // TODO: Slightly better error handling, print the message.
             emu.on('error', error => reject(error));
