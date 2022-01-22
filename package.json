@@ -1,0 +1,44 @@
+{
+  "name": "nes-test",
+  "version": "0.1.0",
+  "description": "A simple framework for testing NES roms using jasmine",
+  "main": "index.js",
+  "bin": "runner.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "start": "node ./runner.js",
+    "test-examples": "node ./runner.js examples",
+    "test-library": "jasmine --config=library-tests/jasmine.json",
+    "build-all": "pkg . --public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cppchriscpp/nes-test.git"
+  },
+  "keywords": [
+    "nes",
+    "nintendo",
+    "test",
+    "rom"
+  ],
+  "author": "cppchriscpp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cppchriscpp/nes-test/issues"
+  },
+  "homepage": "https://github.com/cppchriscpp/nes-test#readme",
+  "dependencies": {
+    "jasmine": "^4.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "pkg": "^5.1.0"
+  },
+  "pkg": {
+    "targets": ["node14-win", "node14-linux", "node14-darwin"],
+    "assets": ["lua"],
+    "outputPath": "./dist"
+  }
+}

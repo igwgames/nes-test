@@ -1,0 +1,10 @@
+{
+  "spec_dir": "./library-tests",
+  "spec_files": [
+    "**/*-spec.js"
+  ],
+  "env": {
+    "stopSpecOnExpectationFailure": false,
+    "random": true
+  }
+}
