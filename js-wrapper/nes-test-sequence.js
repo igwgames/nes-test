@@ -37,13 +37,21 @@ class NesTestSequence {
         this.instructionSequence.push({frame: this.currentFrame, type: 'sendInput', value, controller});
     }
 
-    // FIXME: assertGreaterThan, lessThan, greaterthanOrEqual, lessthanOrEqual, assertNotEqual
-    assertEqual(name, valueA, valueB) {
+    _rawAssert(name, valueA, valueB, functionName, operator) {
         this.assertionNames.push(name);
         // Pre-create the error for this, including the stacktrace it would fire if it were to break right here. >:D
-        const error = new Error('[nes-test][assertEqual] ' + name);
-        this.instructionSequence.push({frame: this.currentFrame, type: 'assert', valueA, valueB, operator: '==', assertIndex: this.assertionNames.length - 1, error});
+        const error = new Error(`[nes-test][${functionName}] ${name}`);
+        this.instructionSequence.push({frame: this.currentFrame, type: 'assert', valueA, valueB, operator, assertIndex: this.assertionNames.length - 1, error});
+
     }
+
+    assertEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertEqual', '=='); }
+    assertNotEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertNotEqual', '~='); }
+    assertLessThan(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertLessThan', '<'); }
+    assertLessThanOrEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertLessThanOrEqual', '<='); }
+    assertGreaterThan(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertGreaterThan', '>'); }
+    assertGreaterThanOrEqual(name, valueA, valueB) { return this._rawAssert(name, valueA, valueB, 'assertGreaterThanOrEqual', '>='); }
+
 
     getRawResult() {
         return this.rawResult;
@@ -63,6 +71,8 @@ class NesTestSequence {
         if (insertFunctions) {
             if (value.type === 'cpu') {
                 return `emu.read(${value.address}, emu.memType.cpuDebug)`;
+            } else if (value.type === 'ppu') {
+                return `emu.read(${value.address}, emu.memType.ppuDebug)`;
             } else {
                 throw new Error('Unknown NesTest object type passed into formatter: ' + JSON.stringify(value));
             }
@@ -133,6 +143,17 @@ class NesTestSequence {
 
         this.rawResult = {};
     }
+
+    // Memory location getters
+    static getRamValue(addr) {
+        return {type: 'cpu', address: addr};
+    }
+
+    static getPpuValue(addr) {
+        return {type: 'ppu', address: addr};
+    }
+
+    static getRomValue
 
 }
 

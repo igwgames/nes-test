@@ -8,12 +8,12 @@ describe('Basic rom functionality', () => {
 
         // Wait for intro screen to be dismissed
         testSequence.runCpuFrames(60);
-        testSequence.assertEqual('Initial memory value is set to 0', NesTest.getRamValue(0x2fe), 0);
+        testSequence.assertEqual('Initial memory value is set to 0', NesTestSequence.getRamValue(0x2fe), 0);
         testSequence.sendInput({start: true});
         testSequence.runCpuFrames(30);
         testSequence.sendInput({start: true});
         testSequence.runCpuFrames(5);
-        testSequence.assertEqual('Memory value not set as expected', NesTest.getRamValue(0x2fe), 23);
+        testSequence.assertEqual('Memory value not set as expected', NesTestSequence.getRamValue(0x2fe), 23);
 
         await testSequence.run();
     });
