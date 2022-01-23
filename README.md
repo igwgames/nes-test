@@ -34,7 +34,7 @@ More examples can be found in the `examples/` folder!
         // Wait for the rom to allow input
         testSequence.runCpuFrames(60);
         // Check that the rom has cleared this memory value before any input happens
-        testSequence.assertEqual('Initial memory value is set to 0', NesTestSequence.getRamValue(0x2fe), 0);
+        testSequence.assertEqual('Initial memory not cleared to 0', NesTestSequence.getRamValue(0x2fe), 0);
         // Press start to skip the intro screen of the rom
         testSequence.sendInput({start: true});
         // Wait for the title screen to be drawn

@@ -42,7 +42,7 @@ describe('Multiple spec test', () => {
 
             // Make sure all values in the sprite table are empty
             for (var i = 0; i < 255; i++) {
-                testSequence.assertEqual('Sprite mem value ' + i + ' cleared', NesTestSequence.getRamValue(0x200 + i), 0);
+                testSequence.assertEqual('Sprite mem value ' + i + 'not  cleared', NesTestSequence.getRamValue(0x200 + i), 0);
             }
             await testSequence.run();
         });
@@ -53,7 +53,7 @@ describe('Multiple spec test', () => {
             testSequence.runCpuFrames(60);
 
             // Wait for intro screen to be dismissed
-            testSequence.assertEqual('Initial memory value is set to 0', NesTestSequence.getRamValue(0x2fe), 0);
+            testSequence.assertEqual('Initial memory value is not set to 0', NesTestSequence.getRamValue(0x2fe), 0);
             testSequence.sendInput({start: true});
             testSequence.runCpuFrames(30);
             testSequence.sendInput({start: true});
