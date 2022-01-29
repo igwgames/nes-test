@@ -57,7 +57,7 @@ More examples can be found in the `examples/` folder!
 
 Download the binary for your operating system from the github releases page.
 
-https://github.com/cppchriscpp/nes-test
+https://github.com/cppchriscpp/nes-test/releases
 
 Put this somewhere on your system, then create a folder for your tests. (You can also copy the examples folder from this repo to start!)
 
@@ -75,7 +75,7 @@ Mesen runs. They are automatically cleaned up as soon as the test run is complet
 ### Special notes for linux
 
 This program will work as expected with linux, however Mesen has a few special requirements to get it going. Namely, you'll need the
-following programs, which may be installed using apt or a similar package manager. 
+following packages, which may be installed using apt or a similar package manager. 
 
 * mono-complete
 * libsdl2-2.0
