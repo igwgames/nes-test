@@ -21,32 +21,32 @@ More examples can be found in the `examples/` folder!
 
 ```javascript
 
-    it('Validates that this is a valid NES rom', async () => {
-        // Rom paths are relative to the test script
-        romData = new NesRomFile('./data/working-nrom.nes');
-        expect(romData.hasValidHeader()).toEqual(true);
-    });
+it('Validates that this is a valid NES rom', async () => {
+    // Rom paths are relative to the test script
+    romData = new NesRomFile('./data/working-nrom.nes');
+    expect(romData.hasValidHeader()).toEqual(true);
+});
 
-    it('Successfully boots and sets gameState to title input state (11)', async () => {
+it('Successfully boots and sets gameState to title input state (11)', async () => {
 
-        // Test the initial value
-        testSequence.assertEqual('gameState does not start as 0', testSequence.getRamByteFromC('gameState'), 0);
-        // NOTE: We could also test testSequence.getRamByteFromAssembly('_gameState'), for games written in assembly language.
+    // Test the initial value
+    testSequence.assertEqual('gameState does not start as 0', testSequence.getRamByteFromC('gameState'), 0);
+    // NOTE: We could also test testSequence.getRamByteFromAssembly('_gameState'), for games written in assembly language.
 
-       // Wait for the intro screen to be dismissable
-        testSequence.runCpuFrames(60);
+    // Wait for the intro screen to be dismissable
+    testSequence.runCpuFrames(60);
 
-        // Dismiss the intro screen
-        testSequence.sendInput({start: true});
-        // Wait for updates to happen
+    // Dismiss the intro screen
+    testSequence.sendInput({start: true});
+    // Wait for updates to happen
 
-        testSequence.runCpuFrames(30);
-        
-        // Check hat gameState has been updated.
-        testSequence.assertEqual('gameState not set to input state', testSequence.getRamByteFromC('gameState'), 11);
+    testSequence.runCpuFrames(30);
+    
+    // Check hat gameState has been updated.
+    testSequence.assertEqual('gameState not set to input state', testSequence.getRamByteFromC('gameState'), 11);
 
-        await testSequence.run();
-    });
+    await testSequence.run();
+});
 
 ```
 
