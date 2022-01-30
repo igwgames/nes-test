@@ -3,6 +3,7 @@ const fs = require('fs'),
     path = require('path'),
     uuid = require('uuid').v4,
     childProcess = require('child_process'),
+    NesRomFile  = require('./nes-rom-file'),
     getCallingPath = require('../util/get-calling-path');
 
 // NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
@@ -22,6 +23,7 @@ class NesTestSequence {
     testId;
     testFile;
     useTestRunner = !(process.env.DEBUG_OPEN_MESEN === 'true');
+    nesRomFileWrapper = null
 
     constructor(romFile) {
         this.romFile = path.resolve(getCallingPath(), romFile);
@@ -31,6 +33,8 @@ class NesTestSequence {
         if (!fs.existsSync(this.romFile)) {
             throw new Error('Rom not found! -- ' + this.romFile);
         }
+
+        this.nesRomFileWrapper = new NesRomFile(this.romFile);
     }
 
     runCpuFrames(value) {
@@ -149,11 +153,35 @@ class NesTestSequence {
     }
 
     // Memory location getters
-    static getRamValue(addr) {
+    static getRamByte(addr) {
         return {type: 'cpu', address: addr};
     }
 
-    static getPpuValue(addr) {
+    getRamByte(addr) {
+        return NesTestSequence.getRamByte(addr);
+    }
+
+    getRamByteFromC(name) {
+        if (!this.nesRomFileWrapper.symbols) {
+            throw new Error('Debug file not found next to rom file! Cannot look addresses by name.');
+        }
+        if (typeof this.nesRomFileWrapper.symbols.c[name] === 'undefined') {
+            throw new Error('Address name not found in rom: ' + name);
+        }
+        return this.getRamByte(this.nesRomFileWrapper.symbols.c[name]);
+    }
+
+    getRamByteFromAssembly(name) {
+        if (!this.nesRomFileWrapper.symbols) {
+            throw new Error('Debug file not found next to rom file! Cannot look addresses by name.');
+        }
+        if (typeof this.nesRomFileWrapper.symbols.assembly[name] === 'undefined') {
+            throw new Error('Address name not found in rom: ' + name);
+        }
+        return this.getRamByte(this.nesRomFileWrapper.symbols.assenbly[name]);
+    }
+
+    static getPpuByte(addr) {
         return {type: 'ppu', address: addr};
     }
 

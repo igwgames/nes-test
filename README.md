@@ -34,7 +34,7 @@ More examples can be found in the `examples/` folder!
         // Wait for the rom to allow input
         testSequence.runCpuFrames(60);
         // Check that the rom has cleared this memory value before any input happens
-        testSequence.assertEqual('Initial memory not cleared to 0', NesTestSequence.getRamValue(0x2fe), 0);
+        testSequence.assertEqual('Initial memory not cleared to 0', NesTestSequence.getRamByte(0x2fe), 0);
         // Press start to skip the intro screen of the rom
         testSequence.sendInput({start: true});
         // Wait for the title screen to be drawn
@@ -45,7 +45,7 @@ More examples can be found in the `examples/` folder!
         // Wait a few frames for the game to start
         testSequence.runCpuFrames(5);
         // Test that the memory address was written as expected.
-        testSequence.assertEqual('Memory value not set as expected', NesTestSequence.getRamValue(0x2fe), 23);
+        testSequence.assertEqual('Memory value not set as expected', NesTestSequence.getRamByte(0x2fe), 23);
 
         // Run mesen, and execute all of the tests written above
         await testSequence.run();
@@ -147,10 +147,10 @@ This will press the up and a button for one frame.
 This runs a comparison on the emulator, and throws an error back to the test runner if the comparison does not return true.
 
 Both values can be either a numerical value, or a memory location wrapped by one of the following functions: 
-- `NesTestSequence.getRamValue(addr)` - anything in cpu memory, 0x0000 to - 0xffff - Usually between 0x0000 and 0x799, and work ram around 0x6000
-- `NesTestSequence.getPpuValue(addr)` - Anything in ppu memory
+- `NesTestSequence.getRamByte(addr)` - anything in cpu memory, 0x0000 to - 0xffff - Usually between 0x0000 and 0x799, and work ram around 0x6000
+- `NesTestSequence.getPpuByte(addr)` - Anything in ppu memory
 
-Example: `sequence.assertEqual("My first test", NesTestSequence.getRamValue(0x01), 25)`
+Example: `sequence.assertEqual("My first test", NesTestSequence.getRamByte(0x01), 25)`
 This will pass if the second variable in zeropage is set to 25, or fail otherwise with a message of "My first test"
 
 #### assertNotEqual(name, firstValue, secondValue)
@@ -175,7 +175,7 @@ the tool. (Values are in milliseconds)
 
 ## Potential future features
 
-* Use debug ca65 symbol table to map addresses to real value
+* Support testing non-byte values (eg words)
 * More methods on NesRom to analyze header information. (mirroring, etc)
 * Allow capturing screenshots using the emulator
 * Allow image comparison with screenshots 

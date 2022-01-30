@@ -34,6 +34,8 @@ describe('Multiple spec test', () => {
         beforeEach(() => {
             // Create a new unique sequence for each test
             testSequence = new NesTestSequence('./data/working-nrom.nes');
+            // Analyze the rom so we can look up values
+            romData = new NesRomFile('./data/working-nrom.nes');
         });
         
         it('Clears all sprite memory at startup', async () => {
@@ -42,23 +44,21 @@ describe('Multiple spec test', () => {
 
             // Make sure all values in the sprite table are empty
             for (var i = 0; i < 255; i++) {
-                testSequence.assertEqual('Sprite mem value ' + i + 'not  cleared', NesTestSequence.getRamValue(0x200 + i), 0);
+                testSequence.assertEqual('Sprite mem value ' + i + 'not  cleared', testSequence.getRamByte(0x200 + i), 0);
             }
             await testSequence.run();
         });
 
-        it('Successfully boots and sets the value at 0x2fe to 23', async () => {
+        it('Successfully boots and sets gameState to title input state (11)', async () => {
 
+            testSequence.assertEqual('gameState does not start as 0', testSequence.getRamByteFromC('gameState'), 0);
             // Wait for the intro screen to be dismissable
             testSequence.runCpuFrames(60);
-
+            
+            testSequence.sendInput({start: true});
             // Wait for intro screen to be dismissed
-            testSequence.assertEqual('Initial memory value is not set to 0', NesTestSequence.getRamValue(0x2fe), 0);
-            testSequence.sendInput({start: true});
             testSequence.runCpuFrames(30);
-            testSequence.sendInput({start: true});
-            testSequence.runCpuFrames(5);
-            testSequence.assertEqual('Memory value not set as expected', NesTestSequence.getRamValue(0x2fe), 23);
+            testSequence.assertEqual('gameState not set to input state', testSequence.getRamByteFromC('gameState'), 11);
 
             await testSequence.run();
         });
