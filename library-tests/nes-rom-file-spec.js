@@ -5,7 +5,7 @@ let nesRomFile
 describe('nes-rom-file', () => {
 
     beforeEach(() => {
-        nesRomFile = new NesRomFile('library-tests/data/working-nrom.nes')
+        nesRomFile = new NesRomFile('./data/working-nrom.nes')
     })
 
     describe('constructor', () => {
@@ -63,4 +63,52 @@ describe('nes-rom-file', () => {
             expect(nesRomFile.getMapper()).toEqual(237);
         });
     });
+
+    describe('getMirroring', () => {
+        it('Serves horizontal if the bit is set to false', () => {
+            nesRomFile._romData[6] = 0xae;
+            expect(nesRomFile.getMirroring()).toEqual('horizontal');
+        });
+        it('Serves vertical if the bit is set to true', () => {
+            nesRomFile._romData[6] = 0x41;
+            expect(nesRomFile.getMirroring()).toEqual('vertical');
+        });
+    });
+
+    describe('getIncludesBatteryBackedRam', () => {
+        it('Serves true if bit 2 is set', () => {
+            nesRomFile._romData[6] = 0x02;
+            expect(nesRomFile.getIncludesBatteryBackedRam()).toEqual(true);
+        });
+        it('Serves false if bit 2 is not set', () => {
+            nesRomFile._romData[6] = 0x05;
+            expect(nesRomFile.getIncludesBatteryBackedRam()).toEqual(false);
+        });
+    });
+    describe('getIncludesFourScreenVram', () => {
+        it('Serves true if bit 4 is set', () => {
+            nesRomFile._romData[6] = 0x08;
+            expect(nesRomFile.getIncludesFourScreenVram()).toEqual(true);
+        });
+        it('Serves false if bit 4 is not set', () => {
+            nesRomFile._romData[6] = 0x07;
+            expect(nesRomFile.getIncludesFourScreenVram()).toEqual(false);
+        });
+    });
+
+    describe('symbols field', () => {
+        it('Serves up null if the field is not set', () => {
+            nesRomFile = new NesRomFile('./data/working-nrom-no-debug.nes');
+            expect(nesRomFile.symbols).toEqual(null);
+        });
+
+        it('Serves up known c fields based on the provided rom', () => {
+            // These values are hardcoded in the (real) debug files in the data directory
+            expect(nesRomFile.symbols.c.gameState).toEqual(99);
+        });
+
+        it('Serves up known assembly fields based on the provided rom', () => {
+            expect(nesRomFile.symbols.assembly._gameState).toEqual(99);
+        });
+    })
 });

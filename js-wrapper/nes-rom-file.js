@@ -44,7 +44,6 @@ class NesRomFile {
         return (this.raw[6] >> 4) + (this.raw[7] & 0xf0);
     }
 
-    // FIXME: Tests for these
     getMirroring() {
         return (this.raw[6] & 0x01) ? 'vertical' : 'horizontal';
     }

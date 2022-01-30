@@ -178,11 +178,15 @@ class NesTestSequence {
         if (typeof this.nesRomFileWrapper.symbols.assembly[name] === 'undefined') {
             throw new Error('Address name not found in rom: ' + name);
         }
-        return this.getRamByte(this.nesRomFileWrapper.symbols.assenbly[name]);
+        return this.getRamByte(this.nesRomFileWrapper.symbols.assembly[name]);
     }
 
     static getPpuByte(addr) {
         return {type: 'ppu', address: addr};
+    }
+
+    getPpuByte(addr) {
+        return NesTestSequence.getPpuByte(addr);
     }
 
     static getRomValue

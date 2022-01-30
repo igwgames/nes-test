@@ -11,6 +11,7 @@
     "start": "node ./runner.js",
     "test-examples": "node ./runner.js examples",
     "test-library": "jasmine --config=library-tests/jasmine.json",
+    "test": "npm run test-library && npm run test-examples",
     "build-all": "pkg . --public"
   },
   "repository": {
