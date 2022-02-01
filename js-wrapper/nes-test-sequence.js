@@ -1,4 +1,5 @@
 const fs = require('fs'),
+    os = require('os'),
     process = require('process'),
     path = require('path'),
     uuid = require('uuid').v4,
@@ -10,6 +11,7 @@ const fs = require('fs'),
 const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
 const needsMono = process.platform !== 'win32';
 
+const tempDir = path.join(os.tmpdir(), 'nes-test', 'lua')
 
 class NesTestSequence {
 
@@ -28,13 +30,19 @@ class NesTestSequence {
     constructor(romFile) {
         this.romFile = path.resolve(getCallingPath(), romFile);
         this.testId = uuid();
-        this.testFile = path.join(process.cwd(), 'nes-test-temp', `test-` + this.testId + '.lua')
 
         if (!fs.existsSync(this.romFile)) {
             throw new Error('Rom not found! -- ' + this.romFile);
         }
 
         this.nesRomFileWrapper = new NesRomFile(this.romFile);
+
+        // Build the temp directories if they do not exist
+        if (!fs.existsSync(tempDir)) {
+            try { fs.mkdirSync(path.join(os.tmpdir(), 'nes-test')); } catch (e) { if (e.code !== 'EEXIST') { throw e; } }
+            try { fs.mkdirSync(tempDir); } catch (e) { if (e.code !== 'EEXIST') { throw e; } }
+        }
+        this.testFile = path.join(tempDir, `test-` + this.testId + '.lua')
     }
 
     runCpuFrames(value) {
@@ -117,7 +125,6 @@ class NesTestSequence {
         this.instructionSequence.push({frame: this.currentFrame, type: 'stop'});
 
         // Generate the lua file
-        try { fs.mkdirSync(path.join(process.cwd(), 'nes-test-temp')) } catch (e) { /* Directory exists, do nothing */ }
         let baseLua = fs.readFileSync(path.join(__dirname, '..', 'lua', 'base.lua')).toString();
         baseLua = baseLua
             .replace('-- [nes-test-replacement events]', this.getEventTableLua())

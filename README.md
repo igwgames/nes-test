@@ -66,9 +66,6 @@ Run the program by calling it on the command line, with the relative path to you
 ./nes-test-win ./examples
 ```
 
-Note that this will create a `./nes-test-temp` folder in the same folder as the binary. This is needed to store lua files that
-Mesen runs. They are automatically cleaned up as soon as the test run is complete.
-
 ### Special notes for linux
 
 This program will work as expected with linux, however Mesen has a few special requirements to get it going. Namely, you'll need the
