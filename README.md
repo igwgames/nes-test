@@ -88,7 +88,7 @@ I really need to write proper documentation. For now, here's a barebones version
 
 ### NesRom
 
-The NesRom tool allos you to inspect the contents of a rom file. The constructor requires the path to a rom, relative to the current
+The NesRom tool allows you to inspect the contents of a rom file. The constructor requires the path to a rom, relative to the current
 test file.
 
 ```javascript

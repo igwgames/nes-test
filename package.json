@@ -12,7 +12,8 @@
     "test-examples": "node ./runner.js examples",
     "test-library": "jasmine --config=library-tests/jasmine.json",
     "test": "npm run test-library && npm run test-examples",
-    "build-all": "pkg . --public"
+    "build-all": "pkg . --public",
+    "generate-docs": "jsdoc -c ./jsdoc/jsdoc.conf.js"
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,18 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.10",
     "pkg": "^5.1.0"
   },
   "pkg": {
-    "targets": ["node14-win", "node14-linux", "node14-darwin"],
-    "assets": ["lua"],
+    "targets": [
+      "node14-win",
+      "node14-linux",
+      "node14-darwin"
+    ],
+    "assets": [
+      "lua"
+    ],
     "outputPath": "./dist"
   }
 }
