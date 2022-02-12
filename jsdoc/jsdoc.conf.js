@@ -7,8 +7,6 @@ module.exports = {
     },
     plugins: [
         "plugins/markdown",
-        "./node_modules/ub-jsdoc/plugins/sripPFromDescription",
-        "./node_modules/ub-jsdoc/plugins/memberOfModule.js"
     
     ],
     "recurseDepth": 10,

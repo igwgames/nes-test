@@ -16,6 +16,10 @@ const needsMono = process.platform !== 'win32';
 const tempDir = path.join(os.tmpdir(), 'nes-test'),
     luaDir = path.join(tempDir, 'lua');
 
+/**
+ * Controls a NES emulator, allowing you to run it frame-by-frame, and 
+ * get values out of it. 
+ */
 class NesEmulator {
 
     romFile = null;
@@ -31,6 +35,11 @@ class NesEmulator {
     crashed = false;
     testDirectory;
 
+    /**
+     * Create a NesEmulator instance, read to be started and run your tests.
+     * @param {String} romFile The path to a rom file, relative to the working directory nes-test is called from.
+     * @throws {Error} Error if the rom file cannot be found.
+     */
     constructor(romFile) {
         this.romFile = path.resolve(getCallingPath(), romFile);
         this.testId = uuid();
@@ -57,11 +66,19 @@ class NesEmulator {
         fs.writeFileSync(this.testFile, baseLua);
     }
 
+    /**
+     * Run the given lua code, and return any values you set with writeValue. Note that this is an internal method, and shouldn't be needed for most tests!
+     * @param {string} string The lua code to run. This can be spread across multiple lines.
+     * @returns {object} An object containing some internal state used by the tool. Any 
+     * values you set with writeValue() will be available.
+     */
     async runLua(string) {
         if (!this.started) {
             throw new Error('Emulator not running!');
         }
         
+        // Format that the main lua code we use knows how to parse and execute. 
+        // currentEventNumber is passed between this and the lua to make sure events happen in the right order.
         const lua = `
 local event = {}
 
@@ -78,6 +95,8 @@ return event`;
 
         fs.writeFileSync(path.join(this.testDirectory, 'current-event.lua'), lua);
 
+        // Wait for the emulator/client lua to update js-status.json with the updated state. 
+        // Try up to the limit of retries, waiting 50ms between each attempt.
         let returnState = null;
         for (let i = 0; i < RETRY_LIMIT; i++) {
             try {
@@ -98,17 +117,44 @@ return event`;
         return returnState;
     }
 
+    /**
+     * Run a set number of frames in the emulator before handling further input.
+     * @param {Number} value How many frames to execute
+     */
     async runCpuFrames(value) {
         await this.runLua(`waitFrames(${value})`);
     }
 
+    /**
+     * Press down one or more buttons for the next frame.
+     * @param {object} value An object with keys for any button on the keyboard. Available keys: 
+     * - a
+     * - b
+     * - up
+     * - down
+     * - left
+     * - right
+     * - start
+     * - select
+     * @param {number} controller Which controller to use. (Default player 1)
+     * - 0 (player 1) 
+     * - 1 (player 2)
+     */
     async sendInput(value, controller=0) {
         await this.runLua(`emu.setInput(${controller}, ${this.getLuaFormat(value)})`);
     }
 
     async takeScreenshot(filename) {
+        // FIXME: Write this
     }
 
+    /**
+     * Given a string key, this will look up the label/variable mapped to the name and return that numeric value. Numeric values will 
+     * be returned as-is. Everything else will return null.
+     * @param {Number|String} address Either a numeric address or a string representing an address.
+     * @throws {Error} An error if a string address is not found in the game's debug file. (Or the file is not present)
+     * @returns {Number} A numeric address somewhere in the rom.
+     */
     getNumericAddress(address) {
         if (typeof address === 'string') {
             if (!this.nesRomFileWrapper.symbols) {
@@ -128,30 +174,55 @@ return event`;
         }
     }
 
+    /**
+     * Get the value of a byte from within the NES memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested byte.
+     */
     async getByteValue(address) {
         let numAddress = this.getNumericAddress(address);
         const state = await this.runLua(`writeValue('thisByte', emu.read(${numAddress}, emu.memType.cpuDebug))`);
         return state.thisByte;
     }
 
+    /**
+     * Get the value of a bytefrom within the PPU memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested byte.
+     */
     async getPpuByteValue(address) {
         let numAddress = this.getNumericAddress(address);
         const state = await this.runLua(`writeValue('thisByte', emu.read(${numAddress}, emu.memType.ppuDebug))`);
         return state.thisByte;
     }
 
+    /**
+     * Get the value of a word (two consecutive bytes) from within the NES memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested word.
+     */
     async getWordValue(address) {
         let numAddress = this.getNumericAddress(address);
         const state = await this.runLua(`writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.cpuDebug))`);
         return state.thisWord;
     }
-
+    /**
+     * Get the value of a word (two consecutive bytes) from within the PPU memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested word.
+     */
     async getPpuWordValue(address) {
         let numAddress = this.getNumericAddress(address);
         const state = await this.runLua(`writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.ppuDebug))`);
         return state.thisWord;
     }
 
+    /**
+     * Get a sequence of bytes from the game's memory, of the length requested.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable.
+     * @param {Number} length How many bytes to include in the sequence.
+     * @returns {Number[]} An array with the requested bytes.
+     */
     async getByteRange(address, length) {
         let numAddress = this.getNumericAddress(address);
         const state = await this.runLua(`
@@ -183,7 +254,9 @@ writeValue('range', '"' .. table.concat(a, ",") .. '"')
     }
 
 
-    // Open the emulator 
+    /**
+     * Start the emulator, so that commands can be run.
+     */
     async start() {
 
         // Add the "stop" event to wrap things up
@@ -218,6 +291,10 @@ writeValue('range', '"' .. table.concat(a, ",") .. '"')
 
     }
 
+    /**
+     * Stop the emulator and clean up all temporary test data.
+     * @param {number} code Optional error code to return from Mesen when it exits. You probbably don't want to set this.
+     */
     async stop(code=0) {
         if (this.started) {
             if (this.useTestRunner) {
