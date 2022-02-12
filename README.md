@@ -10,6 +10,7 @@ If I see people using this I'll be much more likely to carry the project forward
 
 * Write unit tests using jasmine and javascript
 * Inspect memory locations during game execution
+* Use labels and variables defined in assembly/C when debug information is configured
 * Inspect rom file for correctness (header is present, rom length matches header)
 * cross-platform support (windows + linux. Mac os if you can get mesen running!))
 * Distributed as a single binary, or an npm module
@@ -26,26 +27,28 @@ it('Validates that this is a valid NES rom', async () => {
     romData = new NesRomFile('./data/working-nrom.nes');
     expect(romData.hasValidHeader()).toEqual(true);
 });
-
-it('Successfully boots and sets gameState to title input state (11)', async () => {
-
-    // Test the initial value
-    testSequence.assertEqual('gameState does not start as 0', testSequence.getRamByteFromC('gameState'), 0);
-    // NOTE: We could also test testSequence.getRamByteFromAssembly('_gameState'), for games written in assembly language.
-
-    // Wait for the intro screen to be dismissable
-    testSequence.runCpuFrames(60);
-
-    // Dismiss the intro screen
-    testSequence.sendInput({start: true});
-    // Wait for updates to happen
-
-    testSequence.runCpuFrames(30);
     
-    // Check hat gameState has been updated.
-    testSequence.assertEqual('gameState not set to input state', testSequence.getRamByteFromC('gameState'), 11);
 
-    await testSequence.run();
+it('gameState C variable starts at 0, then is updated after you dismiss the menu', async () => {
+
+    // Create a new emulator instance
+    emulator = new NesEmulator('./data/working-nrom.nes');
+    // Open the emulator
+    emulator.start();
+
+    // Check the initial state of gameState
+    expect(await emulator.getByteValue('gameState')).toEqual(0)
+
+    // Wait for input to start being accepted, then press start
+    await emulator.runCpuFrames(60);
+    await emulator.sendInput({start: true});
+    await emulator.runCpuFrames(30);
+
+    // Validate gameState was properly updated
+    expect(await emulator.getByteValue('gameState')).toEqual(11);
+
+    // Stop the emulator
+    emulator.stop();
 });
 
 ```
@@ -222,8 +225,6 @@ the tool. (Values are in milliseconds)
 
 ## Potential future features
 
-* Support testing non-byte values (eg words)
-* More methods on NesRom to analyze header information. (mirroring, etc)
 * Allow capturing screenshots using the emulator
 * Allow image comparison with screenshots 
 * Allow installs as a node module. (Note: this might work now, if you're adventurous feel free to try!)
