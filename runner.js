@@ -31,7 +31,7 @@ jasmine.loadConfig({
     jsLoader: 'require',
     // Have to guess the path from where the jasmine module inits. Ugly, but it works.
     // This overrides require (forced above) to load NesTest w/o it being installed locally.
-    requires: ['../../../util/jasmine-boot.js']
+    requires: ['../../../util/jasmine-boot.js', '../../../util/jasmine-matchers.js']
 });
 
 jasmine.execute();

@@ -4,11 +4,15 @@
 
 const path = require("path");
 
-module.exports = function getCallingPath() {
+module.exports = function getCallingPath(level = 0) {
     const stack = getStack();
 
     // Skip this file too
     stack.shift();
+
+    for (let i = 0; i < level; i++) {
+        stack.shift();
+    }
 
     return path.dirname(stack[1].getFileName());
 }
@@ -30,3 +34,4 @@ function getStack() {
 
     return stack;
 }
+

@@ -1,6 +1,7 @@
 # nes-test
 
-A simple jasmine + mesen-based test runner for the NES. Validate that your generated roms have
+A simple [jasmine](https://jasmine.github.io/api/4.0/matchers.html) + 
+mesen-based test runner for the NES. Validate that your generated roms have
 the proper size/signature, and do the right things when you run them.
 
 **Note**: This is a _very_ early project! If you find this thing useful, _please_ let me know!
@@ -222,6 +223,51 @@ See the section for `getRomByte` above. These work the same way, but return diff
 This works the same as `getRomByte`, but instead fetches an entire range of values in sequence. 
 
 This will return a javascript array you can iterate over, or otherwise test.
+
+#### takeScreenshot(name, [options])
+
+Take a screenshot from the emulator, which can be compared with pre-made screenshots of the behavior you expect to see.
+
+To run one of those tests, you can do the following, where your screenshot is a file on disk. The path to your screenshot
+will be relative to the directory the test runs in.
+
+```javascript
+// Take a screenshot of the intro screen
+const testImage = await emulator.takeScreenshot('intro-screen.png');
+
+// Do a comparison that they're similar (at least 80% the same)
+expect(testImage).toBeSimilarToImage('./data/intro-screenshot.png');
+
+// Also test that they're identical. (You'll generally want to do only one of these tests, but both are provided for the example)
+expect(testImage).toBeIdenticalToImage('./data/intro-screenshot.png');
+```
+
+There is one option available: `copyToLocation` - if you provide a path here, the screenshot will be copied to the location 
+you specify, instead of being deleted at the end of the rest run.
+
+##### Matcher expect(pathToScreenshot).toBeSimilarToImage(pathToScreenshot)
+
+This can be used to tell whether an image is simlar to another image. It will be successful if at least 80% of the pixels in the 
+two provided images match.
+
+The left image should be your test image - you need the full path, which can be gotten from `emulator.getScreenshotPath('name')`,
+or as the return value from the `takeScreenshot` method.
+
+The right image should be a relative path to an image you have pre-created to compare with. 
+
+##### Matcher expect(pathToScreenshot).toBeIdenticalyToImage(pathToScreenshot)
+
+This is functionally identical to the matcher above, however it requires a 100% match.
+
+Note that this will fail if you have input displays turned on for your Mesen instance. 
+
+##### Caveats
+
+Due to limitations with Mesen, any input display that you have enabled in Mesen will show up in your screenshots.
+
+The easiest way to deal with this is to use the `toBeSimilarToImage` matcher, which will compensate for issues like
+this. You can also turn the feature off from Mesen's ui, if you would like. Unfortunately Mesen gives us no way to
+disable this feature for test runs at the moment.
 
 ## Configuration
 

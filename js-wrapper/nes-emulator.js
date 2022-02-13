@@ -12,6 +12,7 @@ const RETRY_LIMIT = 100;
 // NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
 const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
 const needsMono = process.platform !== 'win32';
+const mesenOptions = ['/DoNotSaveSettings', '/ShowFPS=false', '/ShowLagCounter=false', '/ShowInputDisplay=false']
 
 const tempDir = path.join(os.tmpdir(), 'nes-test'),
     luaDir = path.join(tempDir, 'lua');
@@ -33,6 +34,7 @@ class NesEmulator {
     currentEventNumber = 1;
     emulatorHandle = null;
     crashed = false;
+    callingPath = null;
     testDirectory;
 
     /**
@@ -41,6 +43,7 @@ class NesEmulator {
      * @throws {Error} Error if the rom file cannot be found.
      */
     constructor(romFile) {
+        this.callingPath = getCallingPath();
         this.romFile = path.resolve(getCallingPath(), romFile);
         this.testId = uuid();
         this.testDirectory = path.join(luaDir, this.testId);
@@ -62,7 +65,7 @@ class NesEmulator {
 
         // Generate the lua file
         let baseLua = fs.readFileSync(path.join(__dirname, '..', 'lua', 'emulator-controller.lua')).toString();
-        baseLua = baseLua.replace('-- [nes-test-replacement interopPath]', 'interopPath = "' + (this.testDirectory + path.sep).replace(/\\/g, '\\\\') + '"');
+        baseLua = baseLua.replace('-- [nes-test-replacement interopPath]', 'interopPath = "' + this._cleanWinPath(this.testDirectory + path.sep) + '"');
         fs.writeFileSync(this.testFile, baseLua);
     }
 
@@ -144,8 +147,49 @@ return event`;
         await this.runLua(`emu.setInput(${controller}, ${this.getLuaFormat(value)})`);
     }
 
-    async takeScreenshot(filename, options = {keepScreenshot: false}) {
-        // FIXME: Write this
+    /**
+     * Take a screenshot of the emulator and store it for later use in tests. There are also two matchers available: 
+     * - {@link JasmineMatchers#toBeSimilarToImage}
+     * - {@link JasmineMatchers#toBeIdenticalToImage}
+     * @example 
+     * <caption>Takes a screenshot, saves it to "example.png" and compares it to a local "example.png"</caption>
+     *   // Take a screenshot of the intro screen
+     *   const screenshot = await emulator.takeScreenshot('example.png');
+     *
+     *   // Do a comparison that they're similar (at least 80% the same)
+     *   expect(screenshot).toBeSimilarToImage('./example.png');
+     *
+     *   // Also test that they're identical. (You'll generally want to do only one of these tests, but both are provided for the example)
+     *   expect(screenshot).toBeIdenticalToImage('./example.png');
+     * @param {String} filename The name of a screenshot to use.
+     * @param {object} options Options for the screenshot
+     * @param {String} options.copyToLocation Local path to copy the screenshot to, for use after the test ends.
+     * @returns The full path to the file created
+     */
+    async takeScreenshot(filename, options = {copyToLocation: null}) {
+        if (filename.indexOf('/') !== -1 || filename.indexOf('\\') !== -1) {
+            throw new Error('filename for takeScreenshot cannot be a directory. If you want to save the file after the test run completes, provide the copyToLocation argument.');
+        }
+        const state = await this.runLua(`
+local img = emu.takeScreenshot()
+local imgFile, err = io.open("${this._cleanWinPath(path.join(this.testDirectory, filename))}", "wb")
+if (err) then
+    emu.log("Failed writing image file" .. err)
+    writeValue('success', 0)
+    writeValue('errorMessage', '"' .. err .. '"')
+end
+imgFile:write(img)
+imgFile:close()
+writeValue('success', 1)
+        `);
+        if (state.errorMessage || !state.success) {
+            throw new Error(state.errorMessage || 'Unknown error');
+        }
+
+        if (options.copyToLocation) {
+            fs.copyFileSync(this.getScreenshotPath(filename), path.join(this.callingPath, options.copyToLocation));
+        }
+        return this.getScreenshotPath(filename);
     }
 
     /**
@@ -338,7 +382,7 @@ writeValue('range', '"' .. table.concat(a, ",") .. '"')
         // Run mesen, get the result code
         this.emulatorHandle = childProcess.spawn(
             needsMono ? 'mono' : mesenExe, 
-            [...(needsMono ? [mesenExe] : []), ...(this.useTestRunner ? ['--testrunner'] : []), this.romFile, this.testFile],
+            [...(needsMono ? [mesenExe] : []), ...(this.useTestRunner ? ['--testrunner'] : []), ...mesenOptions, this.romFile, this.testFile],
             {cwd: tempDir}
         );
         
@@ -372,6 +416,25 @@ writeValue('range', '"' .. table.concat(a, ",") .. '"')
                 await this.runLua('emu.breakExecution()');
             }
         }
+    }
+
+    /**
+     * Get the full path to a test image, generally to compare with a prepared image.
+     * @param {String} image The name of the image given when the screenshot was taken
+     * @returns The full path to the image file created, for use in tests.
+     */
+    getScreenshotPath(image) {
+        return path.join(this.testDirectory, image);
+    }
+
+    /**
+     * Clean up a windows path so the backslashes don't confuse lua.
+     * @param {String} string The path
+     * @returns The same path, but with backslashes escaped (sorta);
+     * @ignore
+     */
+    _cleanWinPath(string) {
+        return string.replace(/\\/g, '\\\\');
     }
 }
 

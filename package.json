@@ -13,7 +13,7 @@
     "test-library": "jasmine --config=library-tests/jasmine.json",
     "test": "npm run test-library && npm run test-examples",
     "build-all": "pkg . --public",
-    "generate-docs": "jsdoc -c ./jsdoc/jsdoc.conf.js"
+    "generate-docs": "rm -r ./docs && jsdoc -c ./jsdoc/jsdoc.conf.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   "homepage": "https://github.com/cppchriscpp/nes-test#readme",
   "dependencies": {
     "jasmine": "^4.0.2",
+    "pixelmatch": "^5.2.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
