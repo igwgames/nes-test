@@ -54,7 +54,8 @@ it('gameState C variable starts at 0, then is updated after you dismiss the menu
 
 ```
 
-There are plenty of examples in the [examples/](examples) folder. These may be a good first stop!
+There are plenty of examples in the [examples/](https://github.com/cppchriscpp/nes-test/tree/main/examples) folder. 
+These may be a good first stop!
 
 ## Installation
 
@@ -99,7 +100,7 @@ Otherwise follow all of the instructions in the above section. Yes, you really a
 
 ## Examples
 
-There are plenty of examples with documentation in the [examples folder](examples/)
+There are plenty of examples with documentation in the [examples folder](https://github.com/cppchriscpp/nes-test/tree/main/examples)
 
 ## Documentation
 
