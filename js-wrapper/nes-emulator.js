@@ -215,7 +215,6 @@ return event`;
         await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.ppuDebug)`);
     }
 
-
     /**
      * Get the value of a bytefrom within the PPU memory.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
@@ -299,6 +298,12 @@ writeValue('range', '"' .. table.concat(a, ",") .. '"')
         return state.range.split(',').map(i => parseInt(i, 10));
     }
     
+    /**
+     * Generates lua format from a simple json object
+     * @param {@} value A json object
+     * @returns A tring with the lua of that object
+     * @ignore
+     */
     getLuaFormat(value) {
         if (typeof value === 'string') {
             return '"' + value + '"';
