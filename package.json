@@ -48,7 +48,8 @@
       "node14-darwin"
     ],
     "assets": [
-      "lua"
+      "lua",
+      "util/jasmine-matchers.js"
     ],
     "outputPath": "./dist"
   }
