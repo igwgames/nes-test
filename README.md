@@ -54,6 +54,8 @@ it('gameState C variable starts at 0, then is updated after you dismiss the menu
 
 ```
 
+There are plenty of examples in the [examples/](examples) folder. These may be a good first stop!
+
 ## Installation
 
 Download the binary for your operating system from the github releases page.
@@ -94,6 +96,10 @@ following packages, which may be installed using apt or a similar package manage
 Find more information on running Mesen on linux here: https://github.com/SourMesen/Mesen#ubuntu 
 
 Otherwise follow all of the instructions in the above section. Yes, you really are going to run a .exe file on linux.
+
+## Examples
+
+There are plenty of examples with documentation in the [examples folder](examples/)
 
 ## Documentation
 
