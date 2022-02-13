@@ -37,6 +37,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "clean-jsdoc-theme": "^3.3.2",
     "jsdoc": "^3.6.10",
     "pkg": "^5.1.0"
   },

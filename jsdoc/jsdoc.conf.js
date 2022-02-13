@@ -13,6 +13,7 @@ module.exports = {
     "opts": {
         "destination": "./docs/", 
         "recurse": true,
-        "readme": path.join(__dirname, '..', 'README.md')
+        "readme": path.join(__dirname, '..', 'README.md'),
+        "template": "./node_modules/clean-jsdoc-theme"
     },
 }
