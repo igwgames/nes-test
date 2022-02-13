@@ -2,7 +2,8 @@ const Jasmine = require('jasmine'),
     jasmine = new Jasmine(),
     fs = require('fs'),
     path = require('path'),
-    process = require('process');
+    process = require('process'),
+    mesen = require('./util/mesen');
 
 // DO NOT REMOVE
 require('./util/jasmine-boot');
@@ -14,8 +15,6 @@ if (process.argv.length !== 3 || process.argv.indexOf('--help') !== -1 || proces
     logInfo('Version: ' + require('./package.json').version);
     process.exit(1);
 }
-
-logInfo('Running all tests in', process.argv[2]);
 
 if (!fs.existsSync(path.join(process.cwd(), process.argv[2]))) {
     logInfo('The requested directory does not exist!');
@@ -34,4 +33,8 @@ jasmine.loadConfig({
     requires: ['../../../util/jasmine-boot.js', '../../../util/jasmine-matchers.js']
 });
 
-jasmine.execute();
+
+mesen.ensureMesenAvailable().then(() => {
+    logInfo('Running all tests in', process.argv[2]);
+    jasmine.execute();
+});

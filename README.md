@@ -13,7 +13,7 @@ If I see people using this I'll be much more likely to carry the project forward
 * Inspect memory locations during game execution
 * Use labels and variables defined in assembly/C when debug information is configured
 * Inspect rom file for correctness (header is present, rom length matches header)
-* cross-platform support (windows + linux. Mac os if you can get mesen running!))
+* Support for both windows and linux! (Mac support will come if mesen is ever officially supported there)
 * Distributed as a single binary, or an npm module
 
 
@@ -65,8 +65,6 @@ https://github.com/cppchriscpp/nes-test/releases
 
 Put this somewhere on your system, then create a folder for your tests. (You can also copy the examples folder from this repo to start!)
 
-Download mesen from https://mesen.ca, and put mesen.exe (**not mesen.zip**) in the same folder you put the nes-test binary.
-
 Run the program by calling it on the command line, with the relative path to your tests.
 
 ```sh
@@ -77,7 +75,7 @@ Run the program by calling it on the command line, with the relative path to you
 
 0.3 is a complete rewrite of the features of this library. Old code will not work! 
 0.3 restructures the library to allow better passing of data to/from the emulator. It also allows much more intuitive
-test writing. 
+test writing. It also installs Mesen automatically, so no manual setup is required!
 
 
 If you need 0.2, here is a link:
@@ -94,9 +92,13 @@ following packages, which may be installed using apt or a similar package manage
 * libsdl2-2.0
 * gnome-themes-standard (You might be able to get away without this one if you only ever use the test runner)
 
+If you run into issues, try downloading a copy of Mesen manually and getting it to work. The tool should inherit any
+changes you make to your system.
+
 Find more information on running Mesen on linux here: https://github.com/SourMesen/Mesen#ubuntu 
 
-Otherwise follow all of the instructions in the above section. Yes, you really are going to run a .exe file on linux.
+Otherwise follow all of the instructions in the above section. Mesen will be automatically downloaded in a config directory
+when you first run the tests.
 
 ## Examples
 
@@ -266,21 +268,10 @@ The right image should be a relative path to an image you have pre-created to co
 
 This is functionally identical to the matcher above, however it requires a 100% match.
 
-Note that this will fail if you have input displays turned on for your Mesen instance. 
-
-##### Caveats
-
-Due to limitations with Mesen, any input display that you have enabled in Mesen will show up in your screenshots.
-
-The easiest way to deal with this is to use the `toBeSimilarToImage` matcher, which will compensate for issues like
-this. You can also turn the feature off from Mesen's ui, if you would like. Unfortunately Mesen gives us no way to
-disable this feature for test runs at the moment.
-
 ## Configuration
 
 There is not much configuration for this module yet, but a few environment variables can customize behavior to help your debugging: 
 
-* `MESEN_EXE` - set this to the path to your mesen exe. By default, this will look in your current directory.
 * `DEBUG_OPEN_MESEN` - Set this to `true` to open mesen and run a test in the script runner. (Note: enable a single test with `fit()` or behavior may be unpredictable!)
 
 ## Gotchas with jasmine
@@ -290,12 +281,7 @@ the tool. (Values are in milliseconds)
 
 ## Potential future features
 
-* Allow capturing screenshots using the emulator
-* Allow image comparison with screenshots 
 * Allow installs as a node module. (Note: this might work now, if you're adventurous feel free to try!)
-* Explore testing around more advanced mappers.
-* Automatically download mesen with confirmation or a command.
-* Figure out what is needed for mac compatibility. (How can we run mesen there?)
 * Better test roms, with source
 * Instructions for running this in continuous integration environments
   * The short version is, I probably need to publish to npm, then have users run `npx nes-test` 

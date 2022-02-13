@@ -5,12 +5,13 @@ const fs = require('fs'),
     uuid = require('uuid').v4,
     childProcess = require('child_process'),
     NesRomFile  = require('./nes-rom-file'),
-    getCallingPath = require('../util/get-calling-path');
+    getCallingPath = require('../util/get-calling-path'),
+    mesen = require('../util/mesen');
 
 const RETRY_LIMIT = 100;
 
 // NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
-const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
+const mesenExe = mesen.getMesen();
 const needsMono = process.platform !== 'win32';
 const mesenOptions = ['/DoNotSaveSettings', '/ShowFPS=false', '/ShowLagCounter=false', '/ShowInputDisplay=false']
 
