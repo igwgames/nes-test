@@ -69,6 +69,18 @@ Run the program by calling it on the command line, with the relative path to you
 ./nes-test-win ./examples
 ```
 
+### Major rewrite version 0.3
+
+0.3 is a complete rewrite of the features of this library. Old code will not work! 
+0.3 restructures the library to allow better passing of data to/from the emulator. It also allows much more intuitive
+test writing. 
+
+
+If you need 0.2, here is a link:
+
+[0.2 version](https://github.com/cppchriscpp/nes-test/tree/v0.2.1)
+
+
 ### Special notes for linux
 
 This program will work as expected with linux, however Mesen has a few special requirements to get it going. Namely, you'll need the
