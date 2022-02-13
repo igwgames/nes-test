@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      js-wrapper/nes-emulator.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-light.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Home</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><div class="accordion collapsed" id="3075656" > <h3 class="accordion-heading">Classes<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=7469443><div class="accordion-heading child"><a href="JasmineMatchers.html">JasmineMatchers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="JasmineMatchers.html#.toBeIdenticalToImage">toBeIdenticalToImage</a></li><li data-type='method'><a href="JasmineMatchers.html#.toBeSimilarToImage">toBeSimilarToImage</a></li></ul></li><li class="accordion collapsed child" id=9910165><div class="accordion-heading child"><a href="NesEmulator.html">NesEmulator</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="NesEmulator.html#getByteRange">getByteRange</a></li><li data-type='method'><a href="NesEmulator.html#getByteValue">getByteValue</a></li><li data-type='method'><a href="NesEmulator.html#getNumericAddress">getNumericAddress</a></li><li data-type='method'><a href="NesEmulator.html#getPpuByteValue">getPpuByteValue</a></li><li data-type='method'><a href="NesEmulator.html#getPpuWordValue">getPpuWordValue</a></li><li data-type='method'><a href="NesEmulator.html#getScreenshotPath">getScreenshotPath</a></li><li data-type='method'><a href="NesEmulator.html#getWordValue">getWordValue</a></li><li data-type='method'><a href="NesEmulator.html#runCpuFrames">runCpuFrames</a></li><li data-type='method'><a href="NesEmulator.html#runLua">runLua</a></li><li data-type='method'><a href="NesEmulator.html#sendInput">sendInput</a></li><li data-type='method'><a href="NesEmulator.html#setMemoryByteValue">setMemoryByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setMemoryWordValue">setMemoryWordValue</a></li><li data-type='method'><a href="NesEmulator.html#setPpuByteValue">setPpuByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setPpuWordValue">setPpuWordValue</a></li><li data-type='method'><a href="NesEmulator.html#setPrgByteValue">setPrgByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setPrgWordValue">setPrgWordValue</a></li><li data-type='method'><a href="NesEmulator.html#start">start</a></li><li data-type='method'><a href="NesEmulator.html#stop">stop</a></li><li data-type='method'><a href="NesEmulator.html#takeScreenshot">takeScreenshot</a></li></ul></li><li class="accordion collapsed child" id=779277><div class="accordion-heading child"><a href="NesRomFile.html">NesRomFile</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="NesRomFile.html#getIncludesBatteryBackedRam">getIncludesBatteryBackedRam</a></li><li data-type='method'><a href="NesRomFile.html#getIncludesFourScreenVram">getIncludesFourScreenVram</a></li><li data-type='method'><a href="NesRomFile.html#getMapper">getMapper</a></li><li data-type='method'><a href="NesRomFile.html#getMirroring">getMirroring</a></li><li data-type='method'><a href="NesRomFile.html#hasValidHeader">hasValidHeader</a></li></ul></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        js-wrapper/nes-emulator.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const fs = require('fs'),
+    os = require('os'),
+    process = require('process'),
+    path = require('path'),
+    uuid = require('uuid').v4,
+    childProcess = require('child_process'),
+    NesRomFile  = require('./nes-rom-file'),
+    getCallingPath = require('../util/get-calling-path');
+
+const RETRY_LIMIT = 100;
+
+// NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
+const mesenExe = process.env.MESEN_EXE || path.join(process.cwd(), 'Mesen.exe');
+const needsMono = process.platform !== 'win32';
+const mesenOptions = ['/DoNotSaveSettings', '/ShowFPS=false', '/ShowLagCounter=false', '/ShowInputDisplay=false']
+
+const tempDir = path.join(os.tmpdir(), 'nes-test'),
+    luaDir = path.join(tempDir, 'lua');
+
+/**
+ * Controls a NES emulator, allowing you to run it frame-by-frame, and 
+ * get values out of it. 
+ */
+class NesEmulator {
+
+    romFile = null;
+    rawResult = null;
+    currentFrame = 0;
+    started = false;
+    testId;
+    testFile;
+    useTestRunner = !(process.env.DEBUG_OPEN_MESEN === 'true');
+    nesRomFileWrapper = null;
+    currentEventNumber = 1;
+    emulatorHandle = null;
+    crashed = false;
+    callingPath = null;
+    testDirectory;
+
+    /**
+     * Create a NesEmulator instance, read to be started and run your tests.
+     * @param {String} romFile The path to a rom file, relative to the working directory nes-test is called from.
+     * @throws {Error} Error if the rom file cannot be found.
+     */
+    constructor(romFile) {
+        this.callingPath = getCallingPath();
+        this.romFile = path.resolve(getCallingPath(), romFile);
+        this.testId = uuid();
+        this.testDirectory = path.join(luaDir, this.testId);
+
+        if (!fs.existsSync(this.romFile)) {
+            throw new Error('Rom not found! -- ' + this.romFile);
+        }
+
+        this.nesRomFileWrapper = new NesRomFile(this.romFile);
+
+        // Build the temp directories if they do not exist
+        if (!fs.existsSync(this.testDirectory)) {
+            try { fs.mkdirSync(path.join(os.tmpdir(), 'nes-test')); } catch (e) { if (e.code !== 'EEXIST') { throw e; } }
+            try { fs.mkdirSync(luaDir); } catch (e) { if (e.code !== 'EEXIST') { throw e; } }
+            try { fs.mkdirSync(this.testDirectory); } catch (e) { if (e.code !== 'EEXIST') { throw e; } }
+
+        }
+        this.testFile = path.join(this.testDirectory, `test-` + this.testId + '.lua')
+
+        // Generate the lua file
+        let baseLua = fs.readFileSync(path.join(__dirname, '..', 'lua', 'emulator-controller.lua')).toString();
+        baseLua = baseLua.replace('-- [nes-test-replacement interopPath]', 'interopPath = "' + this._cleanWinPath(this.testDirectory + path.sep) + '"');
+        fs.writeFileSync(this.testFile, baseLua);
+    }
+
+    /**
+     * Run the given lua code, and return any values you set with 
+     * NesTest.writeValue. Note that this is an internal method, and shouldn't be needed for most tests! The documentation of the
+     * lua core is also pretty lacking right now. If you use this, please try to help document it!
+     * @param {string} string The lua code to run. This can be spread across multiple lines.
+     * @returns {object} An object containing some internal state used by the tool. Any 
+     * values you set with NesTest.writeValue() will be available.
+     */
+    async runLua(string) {
+        if (!this.started) {
+            throw new Error('Emulator not running!');
+        }
+        
+        // Format that the main lua code we use knows how to parse and execute. 
+        // currentEventNumber is passed between this and the lua to make sure events happen in the right order.
+        const lua = `
+local event = {}
+
+function event.doAction()
+    ${string.split('\n').join('\n    ')}
+end
+
+function event.getNum()
+    return ${this.currentEventNumber}
+end
+
+return event`;
+        this.currentEventNumber++;
+
+        fs.writeFileSync(path.join(this.testDirectory, 'current-event.lua'), lua);
+
+        // Wait for the emulator/client lua to update js-status.json with the updated state. 
+        // Try up to the limit of retries, waiting 50ms between each attempt.
+        let returnState = null;
+        for (let i = 0; i &lt; RETRY_LIMIT; i++) {
+            try {
+                let str = fs.readFileSync(path.join(this.testDirectory, 'js-status.json'));
+                let state = JSON.parse(str);
+                if (state &amp;&amp; state.eventNum === this.currentEventNumber) {
+                    returnState = state;
+                    break;
+                }
+            } catch (e) {
+                // Do nothing, just try again.
+            }
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+        if (returnState === null) {
+            throw new Error('Command failed!');
+        }
+        if (returnState.log &amp;&amp; returnState.log.length > 0) {
+            returnState.log.split('||').filter(a => a.length > 0).forEach(msg => {
+                console.info('[Mesen Lua]', msg)
+            });
+        }
+
+        return returnState;
+    }
+
+    /**
+     * Run a set number of frames in the emulator before handling further input.
+     * @param {Number} value How many frames to execute
+     */
+    async runCpuFrames(value) {
+        await this.runLua(`NesTest.waitFrames(${value})`);
+    }
+
+    /**
+     * Press down one or more buttons for the next frame.
+     * @param {object} value An object with keys for any button on the keyboard. Available keys: 
+     * - a
+     * - b
+     * - up
+     * - down
+     * - left
+     * - right
+     * - start
+     * - select
+     * @param {number} controller Which controller to use. (Default player 1)
+     * - 0 (player 1) 
+     * - 1 (player 2)
+     */
+    async sendInput(value, controller=0) {
+        await this.runLua(`emu.setInput(${controller}, ${this.getLuaFormat(value)})`);
+    }
+
+    /**
+     * Take a screenshot of the emulator and store it for later use in tests. There are also two matchers available: 
+     * - {@link JasmineMatchers#toBeSimilarToImage}
+     * - {@link JasmineMatchers#toBeIdenticalToImage}
+     * @example 
+     * &lt;caption>Takes a screenshot, saves it to "example.png" and compares it to a local "example.png"&lt;/caption>
+     *   // Take a screenshot of the intro screen
+     *   const screenshot = await emulator.takeScreenshot('example.png');
+     *
+     *   // Do a comparison that they're similar (at least 80% the same)
+     *   expect(screenshot).toBeSimilarToImage('./example.png');
+     *
+     *   // Also test that they're identical. (You'll generally want to do only one of these tests, but both are provided for the example)
+     *   expect(screenshot).toBeIdenticalToImage('./example.png');
+     * @param {String} filename The name of a screenshot to use.
+     * @param {object} options Options for the screenshot
+     * @param {String} options.copyToLocation Local path to copy the screenshot to, for use after the test ends.
+     * @returns The full path to the file created
+     */
+    async takeScreenshot(filename, options = {copyToLocation: null}) {
+        if (filename.indexOf('/') !== -1 || filename.indexOf('\\') !== -1) {
+            throw new Error('filename for takeScreenshot cannot be a directory. If you want to save the file after the test run completes, provide the copyToLocation argument.');
+        }
+        const state = await this.runLua(`
+local img = emu.takeScreenshot()
+local imgFile, err = io.open("${this._cleanWinPath(path.join(this.testDirectory, filename))}", "wb")
+if (err) then
+    NesTest.log("Failed writing image file" .. err)
+    NesTest.writeValue('success', 0)
+    NesTest.writeValue('errorMessage', '"' .. err .. '"')
+end
+imgFile:write(img)
+imgFile:close()
+NesTest.writeValue('success', 1)
+        `);
+        if (state.errorMessage || !state.success) {
+            throw new Error(state.errorMessage || 'Unknown error');
+        }
+
+        if (options.copyToLocation) {
+            fs.copyFileSync(this.getScreenshotPath(filename), path.join(this.callingPath, options.copyToLocation));
+        }
+        return this.getScreenshotPath(filename);
+    }
+
+    /**
+     * Given a string key, this will look up the label/variable mapped to the name and return that numeric value. Numeric values will 
+     * be returned as-is. Everything else will return null.
+     * @param {Number|String} address Either a numeric address or a string representing an address.
+     * @throws {Error} An error if a string address is not found in the game's debug file. (Or the file is not present)
+     * @returns {Number} A numeric address somewhere in the rom.
+     */
+    getNumericAddress(address) {
+        if (typeof address === 'string') {
+            if (!this.nesRomFileWrapper.symbols) {
+                throw new Error('Debug file not found next to rom file! Cannot look addresses by name.');
+            }
+            if (typeof this.nesRomFileWrapper.symbols.c[address] !== 'undefined') {
+                return this.nesRomFileWrapper.symbols.c[address];
+            }
+            if (typeof this.nesRomFileWrapper.symbols.assembly[address] !== 'undefined') {
+                return this.nesRomFileWrapper.symbols.assembly[address];
+            }
+            throw new Error('Address name not found in rom: ' + address);
+        } else if (typeof address === 'number') {
+            return address;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get the value of a byte from within the NES memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested byte.
+     */
+    async getByteValue(address) {
+        let numAddress = this.getNumericAddress(address);
+        const state = await this.runLua(`NesTest.writeValue('thisByte', emu.read(${numAddress}, emu.memType.cpuDebug))`);
+        return state.thisByte;
+    }
+    /**
+     * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to
+     */
+    async setMemoryByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.cpuDebug)`);
+    }
+
+    /**
+     * Set a _data_ address on the NES to the given value. This will have no effect on variable memory addresses, only 
+     * on hardcoded PRG data.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to
+     */
+    async setPrgByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.prgRom)`);
+    }
+
+    /**
+     * Set a byte in ppu memory to a given value.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to.
+     */
+    async setPpuByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.ppuDebug)`);
+    }
+
+    /**
+     * Get the value of a bytefrom within the PPU memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested byte.
+     */
+    async getPpuByteValue(address) {
+        let numAddress = this.getNumericAddress(address);
+        const state = await this.runLua(`NesTest.writeValue('thisByte', emu.read(${numAddress}, emu.memType.ppuDebug))`);
+        return state.thisByte;
+    }
+
+    /**
+     * Get the value of a word (two consecutive bytes) from within the NES memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested word.
+     */
+    async getWordValue(address) {
+        let numAddress = this.getNumericAddress(address);
+        const state = await this.runLua(`NesTest.writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.cpuDebug))`);
+        return state.thisWord;
+    }
+    /**
+     * Get the value of a word (two consecutive bytes) from within the PPU memory.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @returns {Number} The requested word.
+     */
+    async getPpuWordValue(address) {
+        let numAddress = this.getNumericAddress(address);
+        const state = await this.runLua(`NesTest.writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.ppuDebug))`);
+        return state.thisWord;
+    }
+
+    /**
+     * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to
+     */
+     async setMemoryWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.cpuDebug)`);
+    }
+
+    /**
+     * Set a _data_ address on the NES to the given value. This will have no effect on variable memory addresses, only 
+     * on hardcoded PRG data.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to
+     */
+    async setPrgWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.writeWord(${numAddress}, ${value}, emu.memType.prgRom)`);
+    }
+
+    /**
+     * Set a word in ppu memory to a given value.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to.
+     */
+    async setPpuWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.writeWord(${numAddress}, ${value}, emu.memType.ppuDebug)`);
+    }
+
+
+    /**
+     * Get a sequence of bytes from the game's memory, of the length requested.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable.
+     * @param {Number} length How many bytes to include in the sequence.
+     * @returns {Number[]} An array with the requested bytes.
+     */
+    async getByteRange(address, length) {
+        let numAddress = this.getNumericAddress(address);
+        const state = await this.runLua(`
+a = {}
+for i=1,${length} do
+    a[i] = emu.read(${numAddress} + i, emu.memType.cpuDebug)
+end
+NesTest.writeValue('range', '"' .. table.concat(a, ",") .. '"')
+        `);
+
+        return state.range.split(',').map(i => parseInt(i, 10));
+    }
+    
+    /**
+     * Generates lua format from a simple json object
+     * @param {@} value A json object
+     * @returns A tring with the lua of that object
+     * @ignore
+     */
+    getLuaFormat(value) {
+        if (typeof value === 'string') {
+            return '"' + value + '"';
+        }
+
+        if (typeof value !== 'object') {
+            return value;
+        }
+
+        // Generic object, not of our special type.
+        const kvLua = Object.keys(value).map((k) => {
+            const v = this.getLuaFormat(value[k]);
+            return ' ' + k + ' = ' + v;
+        });
+        return `{ ${kvLua} }`;
+    }
+
+
+    /**
+     * Start the emulator, so that commands can be run.
+     */
+    async start() {
+
+        // Add the "stop" event to wrap things up
+        this.started = true;
+        this.currentEventNumber = 1;
+        this.crashed = false;
+        // Clean up any event file that might somehow already be in place (Mainly if you're reusing an emulator)
+        try { fs.rmSync(path.join(luaDir, 'current-event.lua')) } catch (e) {}
+
+
+        // Run mesen, get the result code
+        this.emulatorHandle = childProcess.spawn(
+            needsMono ? 'mono' : mesenExe, 
+            [...(needsMono ? [mesenExe] : []), ...(this.useTestRunner ? ['--testrunner'] : []), ...mesenOptions, this.romFile, this.testFile],
+            {cwd: tempDir}
+        );
+        
+        this.emulatorHandle.on('error', error => {
+            this.started = false;
+            this.emulatorHandle = false;
+            this.crashed = true;
+            console.error('Emulator crashed!', error);
+        });
+        this.emulatorHandle.on('close', code => {
+            this.started = false;
+            this.emulatorHandle = false;
+            if (code !== 0) {
+                this.crashed = true;
+                console.warn('Emulator exited with non-zero code');
+            }
+        });
+
+    }
+
+    /**
+     * Stop the emulator and clean up all temporary test data.
+     * @param {number} code Optional error code to return from Mesen when it exits. You probbably don't want to set this.
+     */
+    async stop(code=0) {
+        if (this.started) {
+            if (this.useTestRunner) {
+                await this.runLua(`emu.stop(${code})`);
+                try { fs.rmSync(this.testDirectory, {recursive: true}) } catch (e) { console.error('Failed deleting test data', e); }
+            } else {
+                await this.runLua('emu.breakExecution()');
+            }
+        }
+    }
+
+    /**
+     * Get the full path to a test image, generally to compare with a prepared image.
+     * @param {String} image The name of the image given when the screenshot was taken
+     * @returns The full path to the image file created, for use in tests.
+     */
+    getScreenshotPath(image) {
+        return path.join(this.testDirectory, image);
+    }
+
+    /**
+     * Clean up a windows path so the backslashes don't confuse lua.
+     * @param {String} string The path
+     * @returns The same path, but with backslashes escaped (sorta);
+     * @ignore
+     */
+    _cleanWinPath(string) {
+        return string.replace(/\\/g, '\\\\');
+    }
+}
+
+module.exports = NesEmulator;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"JasmineMatchers","link":"<a href=\"JasmineMatchers.html\">JasmineMatchers</a>"},{"title":"JasmineMatchers.toBeIdenticalToImage","link":"<a href=\"JasmineMatchers.html#.toBeIdenticalToImage\">JasmineMatchers.toBeIdenticalToImage &rtrif; undefined</a>"},{"title":"JasmineMatchers.toBeSimilarToImage","link":"<a href=\"JasmineMatchers.html#.toBeSimilarToImage\">JasmineMatchers.toBeSimilarToImage &rtrif; undefined</a>"},{"title":"NesEmulator","link":"<a href=\"NesEmulator.html\">NesEmulator</a>"},{"title":"NesEmulator#getByteRange","link":"<a href=\"NesEmulator.html#getByteRange\">NesEmulator &rtrif; getByteRange</a>"},{"title":"NesEmulator#getByteValue","link":"<a href=\"NesEmulator.html#getByteValue\">NesEmulator &rtrif; getByteValue</a>"},{"title":"NesEmulator#getNumericAddress","link":"<a href=\"NesEmulator.html#getNumericAddress\">NesEmulator &rtrif; getNumericAddress</a>"},{"title":"NesEmulator#getPpuByteValue","link":"<a href=\"NesEmulator.html#getPpuByteValue\">NesEmulator &rtrif; getPpuByteValue</a>"},{"title":"NesEmulator#getPpuWordValue","link":"<a href=\"NesEmulator.html#getPpuWordValue\">NesEmulator &rtrif; getPpuWordValue</a>"},{"title":"NesEmulator#getScreenshotPath","link":"<a href=\"NesEmulator.html#getScreenshotPath\">NesEmulator &rtrif; getScreenshotPath</a>"},{"title":"NesEmulator#getWordValue","link":"<a href=\"NesEmulator.html#getWordValue\">NesEmulator &rtrif; getWordValue</a>"},{"title":"NesEmulator#runCpuFrames","link":"<a href=\"NesEmulator.html#runCpuFrames\">NesEmulator &rtrif; runCpuFrames</a>"},{"title":"NesEmulator#runLua","link":"<a href=\"NesEmulator.html#runLua\">NesEmulator &rtrif; runLua</a>"},{"title":"NesEmulator#sendInput","link":"<a href=\"NesEmulator.html#sendInput\">NesEmulator &rtrif; sendInput</a>"},{"title":"NesEmulator#setMemoryByteValue","link":"<a href=\"NesEmulator.html#setMemoryByteValue\">NesEmulator &rtrif; setMemoryByteValue</a>"},{"title":"NesEmulator#setMemoryWordValue","link":"<a href=\"NesEmulator.html#setMemoryWordValue\">NesEmulator &rtrif; setMemoryWordValue</a>"},{"title":"NesEmulator#setPpuByteValue","link":"<a href=\"NesEmulator.html#setPpuByteValue\">NesEmulator &rtrif; setPpuByteValue</a>"},{"title":"NesEmulator#setPpuWordValue","link":"<a href=\"NesEmulator.html#setPpuWordValue\">NesEmulator &rtrif; setPpuWordValue</a>"},{"title":"NesEmulator#setPrgByteValue","link":"<a href=\"NesEmulator.html#setPrgByteValue\">NesEmulator &rtrif; setPrgByteValue</a>"},{"title":"NesEmulator#setPrgWordValue","link":"<a href=\"NesEmulator.html#setPrgWordValue\">NesEmulator &rtrif; setPrgWordValue</a>"},{"title":"NesEmulator#start","link":"<a href=\"NesEmulator.html#start\">NesEmulator &rtrif; start</a>"},{"title":"NesEmulator#stop","link":"<a href=\"NesEmulator.html#stop\">NesEmulator &rtrif; stop</a>"},{"title":"NesEmulator#takeScreenshot","link":"<a href=\"NesEmulator.html#takeScreenshot\">NesEmulator &rtrif; takeScreenshot</a>"},{"title":"NesRomFile","link":"<a href=\"NesRomFile.html\">NesRomFile</a>"},{"title":"NesRomFile#getIncludesBatteryBackedRam","link":"<a href=\"NesRomFile.html#getIncludesBatteryBackedRam\">NesRomFile &rtrif; getIncludesBatteryBackedRam</a>"},{"title":"NesRomFile#getIncludesFourScreenVram","link":"<a href=\"NesRomFile.html#getIncludesFourScreenVram\">NesRomFile &rtrif; getIncludesFourScreenVram</a>"},{"title":"NesRomFile#getMapper","link":"<a href=\"NesRomFile.html#getMapper\">NesRomFile &rtrif; getMapper</a>"},{"title":"NesRomFile#getMirroring","link":"<a href=\"NesRomFile.html#getMirroring\">NesRomFile &rtrif; getMirroring</a>"},{"title":"NesRomFile#hasValidHeader","link":"<a href=\"NesRomFile.html#hasValidHeader\">NesRomFile &rtrif; hasValidHeader</a>"}];
+        var options = 
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+
+  </body>
+
+</html>

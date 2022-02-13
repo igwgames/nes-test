@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding favicon -->
+    
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      js-wrapper/nes-rom-file.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-light.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Home</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><div class="accordion collapsed" id="3075656" > <h3 class="accordion-heading">Classes<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=7469443><div class="accordion-heading child"><a href="JasmineMatchers.html">JasmineMatchers</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="JasmineMatchers.html#.toBeIdenticalToImage">toBeIdenticalToImage</a></li><li data-type='method'><a href="JasmineMatchers.html#.toBeSimilarToImage">toBeSimilarToImage</a></li></ul></li><li class="accordion collapsed child" id=9910165><div class="accordion-heading child"><a href="NesEmulator.html">NesEmulator</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="NesEmulator.html#getByteRange">getByteRange</a></li><li data-type='method'><a href="NesEmulator.html#getByteValue">getByteValue</a></li><li data-type='method'><a href="NesEmulator.html#getNumericAddress">getNumericAddress</a></li><li data-type='method'><a href="NesEmulator.html#getPpuByteValue">getPpuByteValue</a></li><li data-type='method'><a href="NesEmulator.html#getPpuWordValue">getPpuWordValue</a></li><li data-type='method'><a href="NesEmulator.html#getScreenshotPath">getScreenshotPath</a></li><li data-type='method'><a href="NesEmulator.html#getWordValue">getWordValue</a></li><li data-type='method'><a href="NesEmulator.html#runCpuFrames">runCpuFrames</a></li><li data-type='method'><a href="NesEmulator.html#runLua">runLua</a></li><li data-type='method'><a href="NesEmulator.html#sendInput">sendInput</a></li><li data-type='method'><a href="NesEmulator.html#setMemoryByteValue">setMemoryByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setMemoryWordValue">setMemoryWordValue</a></li><li data-type='method'><a href="NesEmulator.html#setPpuByteValue">setPpuByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setPpuWordValue">setPpuWordValue</a></li><li data-type='method'><a href="NesEmulator.html#setPrgByteValue">setPrgByteValue</a></li><li data-type='method'><a href="NesEmulator.html#setPrgWordValue">setPrgWordValue</a></li><li data-type='method'><a href="NesEmulator.html#start">start</a></li><li data-type='method'><a href="NesEmulator.html#stop">stop</a></li><li data-type='method'><a href="NesEmulator.html#takeScreenshot">takeScreenshot</a></li></ul></li><li class="accordion collapsed child" id=779277><div class="accordion-heading child"><a href="NesRomFile.html">NesRomFile</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="NesRomFile.html#getIncludesBatteryBackedRam">getIncludesBatteryBackedRam</a></li><li data-type='method'><a href="NesRomFile.html#getIncludesFourScreenVram">getIncludesFourScreenVram</a></li><li data-type='method'><a href="NesRomFile.html#getMapper">getMapper</a></li><li data-type='method'><a href="NesRomFile.html#getMirroring">getMirroring</a></li><li data-type='method'><a href="NesRomFile.html#hasValidHeader">hasValidHeader</a></li></ul></li></ul> </div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        js-wrapper/nes-rom-file.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const fs = require('fs'),
+    path = require('path'),
+    getCallingPath = require('../util/get-calling-path');
+
+/**
+ * Used to represent a NES rom. 
+ * Contains a bunch of methods to analyze the static content in the rom.
+ */
+class NesRomFile {
+
+    romFile = null;
+    debugFile = null;
+
+    _romData = [];
+    _symbols = null;
+
+    /**
+     * Creates a NesRomFile instance.
+     * @param {String} romFile The path to the rom, relative to the current test file.
+     */
+    constructor(romFile) {
+        this.romFile = path.resolve(getCallingPath(), romFile);
+
+        if (!fs.existsSync(this.romFile)) {
+            throw new Error('Rom not found! -- ' + this.romFile);
+        }
+        this._romData = fs.readFileSync(this.romFile);
+
+        const debugFile = this.romFile.substr(0, this.romFile.lastIndexOf('.')) + '.dbg';
+        if (fs.existsSync(debugFile)) {
+            this.debugFile = debugFile;
+        }
+    }
+
+    /**
+     * Test the rom's header, to make sure it is valid and makes sense for the rest of the rom contents.
+     * @returns {Boolean} True if the rom has a valid header, and contents that match the header. Otherwise false.
+     */
+    hasValidHeader() {
+        // Check first 4 characters
+        if (!(this.raw[0] === 'N'.charCodeAt(0) &amp;&amp; this.raw[1] === 'E'.charCodeAt(0) &amp;&amp; this.raw[2] === 'S'.charCodeAt(0) &amp;&amp; this.raw[3] === 0x1A)) {
+            return false;
+        }
+
+        const prgLength = this.raw[4];
+        const chrLength = this.raw[5];
+
+        if (this.raw.length !== (16/* header*/) + (prgLength * 16384) + (chrLength * 8192)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get the mapper number
+     * @returns {Number} The mapper number specified in the header.
+     * @see {@link https://wiki.nesdev.org/w/index.php?title=Mapper|NESDev Mapper Reference}
+     */
+    getMapper() {
+        return (this.raw[6] >> 4) + (this.raw[7] &amp; 0xf0);
+    }
+
+    /**
+     * Gets the mirroring value from the rom header.
+     * @returns {String} A string value of either "vertical" or "horizontal".
+     */
+    getMirroring() {
+        return (this.raw[6] &amp; 0x01) ? 'vertical' : 'horizontal';
+    }
+
+    /**
+     * Check if the rom includes battery-backed ram.
+     * @returns {Boolean} True if the header indicates using battery backed ram, otherwise false.
+     */
+    getIncludesBatteryBackedRam() {
+        return !!(this.raw[6] &amp; 0x02);
+    }
+
+    /**
+     * Test if the rom includes 4 screen vram.
+     * @returns {Boolean} True if the header indicates supporting 4 screen vram, false otherwise.
+     */
+    getIncludesFourScreenVram() {
+        return !!(this.raw[6] &amp; 0x08);
+    }
+
+    /**
+     * Array containing the raw data from the rom, for your own inspection.
+     */
+    get raw() {
+        return this._romData;
+    }
+
+    /**
+     * If there is a `.dbg` file with the same name as the rom in the same folder, this will have a list of 
+     * all recognized assembly and c symbols parsed from the debug file, mapped to memory addresses. 
+     * If you have debugging in mesen working, this work with the same file. 
+     *
+     * It has two sub-objects: `assembly` and `c`. (The C one will only be populated if you created a game with C debugging
+     * symbols.)
+
+     * This is used within NesTestSequence to test ram values at these locations.     
+    */
+    get symbols() {
+        if (this.debugFile !== null) {
+            if (this._symbols === null) {
+                this._symbols = this._parseSymbols();
+            }
+            return this._symbols;
+        } else {
+            return null;
+        }
+    }
+
+    // Get the symbols out of the .dbg file, assuming it exists.
+    _parseSymbols() {
+        const usefulLines = fs.readFileSync(this.debugFile).toString().split('\n').filter(l => (l.startsWith('sym') || l.startsWith('csym')));
+
+        let symbolTable = {c: {}, assembly: {}};
+        let cSymbols = [];
+
+        usefulLines.forEach(line => {
+            // NOTE: We rely on c symbols appearing earlier in the file than regular symbols, so we can look them up!
+            if (line.startsWith('csym')) {
+                // Skip any lines that don't have a symbol they're linked to. Not much we can do without that.
+                if (line.indexOf(',sym=') === -1 ) { return; }
+                const nameIdx = line.indexOf(',name="') + 7,
+                    nameEnd = line.indexOf('"', nameIdx+1);
+                    
+                    // Since we're going to look up by name, we can bypass a lot of the funkiness with linking these
+                    // and just grab the names. 
+                    cSymbols.push(line.substring(nameIdx, nameEnd));
+            } else {
+                // Skip symbols that don't have a value, we can't ddo anything with them
+                if (line.indexOf(',val=') === -1) { return; }
+                
+                const nameIdx = line.indexOf(',name="') + 7,
+                    nameEnd = line.indexOf('"', nameIdx+1),
+                    name = line.substring(nameIdx, nameEnd),
+                    valIdx = line.indexOf(',val=0x') + 7,
+                    valEnd = line.indexOf(',', valIdx),
+                    valStr = line.substring(valIdx, valEnd);
+
+                symbolTable.assembly[name] = parseInt(valStr, 16);
+
+                if (cSymbols.indexOf(name.substring(1)) !== -1) {
+                    symbolTable.c[name.substring(1)] = parseInt(valStr, 16);
+                }
+            }
+        });
+
+        return symbolTable;
+    }
+}
+
+module.exports = NesRomFile;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"JasmineMatchers","link":"<a href=\"JasmineMatchers.html\">JasmineMatchers</a>"},{"title":"JasmineMatchers.toBeIdenticalToImage","link":"<a href=\"JasmineMatchers.html#.toBeIdenticalToImage\">JasmineMatchers.toBeIdenticalToImage &rtrif; undefined</a>"},{"title":"JasmineMatchers.toBeSimilarToImage","link":"<a href=\"JasmineMatchers.html#.toBeSimilarToImage\">JasmineMatchers.toBeSimilarToImage &rtrif; undefined</a>"},{"title":"NesEmulator","link":"<a href=\"NesEmulator.html\">NesEmulator</a>"},{"title":"NesEmulator#getByteRange","link":"<a href=\"NesEmulator.html#getByteRange\">NesEmulator &rtrif; getByteRange</a>"},{"title":"NesEmulator#getByteValue","link":"<a href=\"NesEmulator.html#getByteValue\">NesEmulator &rtrif; getByteValue</a>"},{"title":"NesEmulator#getNumericAddress","link":"<a href=\"NesEmulator.html#getNumericAddress\">NesEmulator &rtrif; getNumericAddress</a>"},{"title":"NesEmulator#getPpuByteValue","link":"<a href=\"NesEmulator.html#getPpuByteValue\">NesEmulator &rtrif; getPpuByteValue</a>"},{"title":"NesEmulator#getPpuWordValue","link":"<a href=\"NesEmulator.html#getPpuWordValue\">NesEmulator &rtrif; getPpuWordValue</a>"},{"title":"NesEmulator#getScreenshotPath","link":"<a href=\"NesEmulator.html#getScreenshotPath\">NesEmulator &rtrif; getScreenshotPath</a>"},{"title":"NesEmulator#getWordValue","link":"<a href=\"NesEmulator.html#getWordValue\">NesEmulator &rtrif; getWordValue</a>"},{"title":"NesEmulator#runCpuFrames","link":"<a href=\"NesEmulator.html#runCpuFrames\">NesEmulator &rtrif; runCpuFrames</a>"},{"title":"NesEmulator#runLua","link":"<a href=\"NesEmulator.html#runLua\">NesEmulator &rtrif; runLua</a>"},{"title":"NesEmulator#sendInput","link":"<a href=\"NesEmulator.html#sendInput\">NesEmulator &rtrif; sendInput</a>"},{"title":"NesEmulator#setMemoryByteValue","link":"<a href=\"NesEmulator.html#setMemoryByteValue\">NesEmulator &rtrif; setMemoryByteValue</a>"},{"title":"NesEmulator#setMemoryWordValue","link":"<a href=\"NesEmulator.html#setMemoryWordValue\">NesEmulator &rtrif; setMemoryWordValue</a>"},{"title":"NesEmulator#setPpuByteValue","link":"<a href=\"NesEmulator.html#setPpuByteValue\">NesEmulator &rtrif; setPpuByteValue</a>"},{"title":"NesEmulator#setPpuWordValue","link":"<a href=\"NesEmulator.html#setPpuWordValue\">NesEmulator &rtrif; setPpuWordValue</a>"},{"title":"NesEmulator#setPrgByteValue","link":"<a href=\"NesEmulator.html#setPrgByteValue\">NesEmulator &rtrif; setPrgByteValue</a>"},{"title":"NesEmulator#setPrgWordValue","link":"<a href=\"NesEmulator.html#setPrgWordValue\">NesEmulator &rtrif; setPrgWordValue</a>"},{"title":"NesEmulator#start","link":"<a href=\"NesEmulator.html#start\">NesEmulator &rtrif; start</a>"},{"title":"NesEmulator#stop","link":"<a href=\"NesEmulator.html#stop\">NesEmulator &rtrif; stop</a>"},{"title":"NesEmulator#takeScreenshot","link":"<a href=\"NesEmulator.html#takeScreenshot\">NesEmulator &rtrif; takeScreenshot</a>"},{"title":"NesRomFile","link":"<a href=\"NesRomFile.html\">NesRomFile</a>"},{"title":"NesRomFile#getIncludesBatteryBackedRam","link":"<a href=\"NesRomFile.html#getIncludesBatteryBackedRam\">NesRomFile &rtrif; getIncludesBatteryBackedRam</a>"},{"title":"NesRomFile#getIncludesFourScreenVram","link":"<a href=\"NesRomFile.html#getIncludesFourScreenVram\">NesRomFile &rtrif; getIncludesFourScreenVram</a>"},{"title":"NesRomFile#getMapper","link":"<a href=\"NesRomFile.html#getMapper\">NesRomFile &rtrif; getMapper</a>"},{"title":"NesRomFile#getMirroring","link":"<a href=\"NesRomFile.html#getMirroring\">NesRomFile &rtrif; getMirroring</a>"},{"title":"NesRomFile#hasValidHeader","link":"<a href=\"NesRomFile.html#hasValidHeader\">NesRomFile &rtrif; hasValidHeader</a>"}];
+        var options = 
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+
+  </body>
+
+</html>
