@@ -144,7 +144,7 @@ return event`;
         await this.runLua(`emu.setInput(${controller}, ${this.getLuaFormat(value)})`);
     }
 
-    async takeScreenshot(filename) {
+    async takeScreenshot(filename, options = {keepScreenshot: false}) {
         // FIXME: Write this
     }
 
@@ -184,6 +184,37 @@ return event`;
         const state = await this.runLua(`writeValue('thisByte', emu.read(${numAddress}, emu.memType.cpuDebug))`);
         return state.thisByte;
     }
+    /**
+     * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to
+     */
+    async setMemoryByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.cpuDebug)`);
+    }
+
+    /**
+     * Set a _data_ address on the NES to the given value. This will have no effect on variable memory addresses, only 
+     * on hardcoded PRG data.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to
+     */
+    async setPrgByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.prgRom)`);
+    }
+
+    /**
+     * Set a byte in ppu memory to a given value.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given byte to.
+     */
+    async setPpuByteValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.ppuDebug)`);
+    }
+
 
     /**
      * Get the value of a bytefrom within the PPU memory.
@@ -216,6 +247,38 @@ return event`;
         const state = await this.runLua(`writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.ppuDebug))`);
         return state.thisWord;
     }
+
+    /**
+     * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to
+     */
+     async setMemoryWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.write(${numAddress}, ${value}, emu.memType.cpuDebug)`);
+    }
+
+    /**
+     * Set a _data_ address on the NES to the given value. This will have no effect on variable memory addresses, only 
+     * on hardcoded PRG data.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to
+     */
+    async setPrgWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.writeWord(${numAddress}, ${value}, emu.memType.prgRom)`);
+    }
+
+    /**
+     * Set a word in ppu memory to a given value.
+     * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
+     * @param {Number} value The value to set the given word to.
+     */
+    async setPpuWordValue(address, value) {
+        let numAddress = this.getNumericAddress(address);
+        await this.runLua(`emu.writeWord(${numAddress}, ${value}, emu.memType.ppuDebug)`);
+    }
+
 
     /**
      * Get a sequence of bytes from the game's memory, of the length requested.

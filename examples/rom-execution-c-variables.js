@@ -2,16 +2,16 @@ const NesEmulator = require('nes-test').NesEmulator;
 
 let emulator;
 describe('Rom execution (assembly)', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         // Create a new unique sequence for each test
         emulator = new NesEmulator('./data/working-nrom.nes');
         // And start the emulator
-        emulator.start();
+        await emulator.start();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
         // Stop the emulator
-        emulator.stop();
+        await emulator.stop();
     })
     
 
