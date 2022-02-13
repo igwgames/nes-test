@@ -70,10 +70,12 @@ class NesEmulator {
     }
 
     /**
-     * Run the given lua code, and return any values you set with writeValue. Note that this is an internal method, and shouldn't be needed for most tests!
+     * Run the given lua code, and return any values you set with 
+     * NesTest.writeValue. Note that this is an internal method, and shouldn't be needed for most tests! The documentation of the
+     * lua core is also pretty lacking right now. If you use this, please try to help document it!
      * @param {string} string The lua code to run. This can be spread across multiple lines.
      * @returns {object} An object containing some internal state used by the tool. Any 
-     * values you set with writeValue() will be available.
+     * values you set with NesTest.writeValue() will be available.
      */
     async runLua(string) {
         if (!this.started) {
@@ -117,6 +119,12 @@ return event`;
         if (returnState === null) {
             throw new Error('Command failed!');
         }
+        if (returnState.log && returnState.log.length > 0) {
+            returnState.log.split('||').filter(a => a.length > 0).forEach(msg => {
+                console.info('[Mesen Lua]', msg)
+            });
+        }
+
         return returnState;
     }
 
@@ -125,7 +133,7 @@ return event`;
      * @param {Number} value How many frames to execute
      */
     async runCpuFrames(value) {
-        await this.runLua(`waitFrames(${value})`);
+        await this.runLua(`NesTest.waitFrames(${value})`);
     }
 
     /**
@@ -174,13 +182,13 @@ return event`;
 local img = emu.takeScreenshot()
 local imgFile, err = io.open("${this._cleanWinPath(path.join(this.testDirectory, filename))}", "wb")
 if (err) then
-    emu.log("Failed writing image file" .. err)
-    writeValue('success', 0)
-    writeValue('errorMessage', '"' .. err .. '"')
+    NesTest.log("Failed writing image file" .. err)
+    NesTest.writeValue('success', 0)
+    NesTest.writeValue('errorMessage', '"' .. err .. '"')
 end
 imgFile:write(img)
 imgFile:close()
-writeValue('success', 1)
+NesTest.writeValue('success', 1)
         `);
         if (state.errorMessage || !state.success) {
             throw new Error(state.errorMessage || 'Unknown error');
@@ -225,7 +233,7 @@ writeValue('success', 1)
      */
     async getByteValue(address) {
         let numAddress = this.getNumericAddress(address);
-        const state = await this.runLua(`writeValue('thisByte', emu.read(${numAddress}, emu.memType.cpuDebug))`);
+        const state = await this.runLua(`NesTest.writeValue('thisByte', emu.read(${numAddress}, emu.memType.cpuDebug))`);
         return state.thisByte;
     }
     /**
@@ -266,7 +274,7 @@ writeValue('success', 1)
      */
     async getPpuByteValue(address) {
         let numAddress = this.getNumericAddress(address);
-        const state = await this.runLua(`writeValue('thisByte', emu.read(${numAddress}, emu.memType.ppuDebug))`);
+        const state = await this.runLua(`NesTest.writeValue('thisByte', emu.read(${numAddress}, emu.memType.ppuDebug))`);
         return state.thisByte;
     }
 
@@ -277,7 +285,7 @@ writeValue('success', 1)
      */
     async getWordValue(address) {
         let numAddress = this.getNumericAddress(address);
-        const state = await this.runLua(`writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.cpuDebug))`);
+        const state = await this.runLua(`NesTest.writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.cpuDebug))`);
         return state.thisWord;
     }
     /**
@@ -287,7 +295,7 @@ writeValue('success', 1)
      */
     async getPpuWordValue(address) {
         let numAddress = this.getNumericAddress(address);
-        const state = await this.runLua(`writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.ppuDebug))`);
+        const state = await this.runLua(`NesTest.writeValue('thisWord', emu.readWord(${numAddress}, emu.memType.ppuDebug))`);
         return state.thisWord;
     }
 
@@ -336,7 +344,7 @@ a = {}
 for i=1,${length} do
     a[i] = emu.read(${numAddress} + i, emu.memType.cpuDebug)
 end
-writeValue('range', '"' .. table.concat(a, ",") .. '"')
+NesTest.writeValue('range', '"' .. table.concat(a, ",") .. '"')
         `);
 
         return state.range.split(',').map(i => parseInt(i, 10));
