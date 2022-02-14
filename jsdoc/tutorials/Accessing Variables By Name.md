@@ -19,3 +19,28 @@ You'll need a modern version of cc65 to make this work - older versions use an i
 version. 
 
 If you are able to see all of your symbols in Mesen, they will also be available in the tool.
+
+## Examples
+
+**Assembly**: In your game, you define a variable named `myVariable`
+```asm
+myVariable: .res 1
+; ...
+lda #25
+sta myVariable
+```
+In your test you can do this: 
+```javascript
+expect(await emulator.getByteValue('myVariable')).toEqual(25);
+```
+
+**C**: In your game, you define a variable named `myCVariable`
+```c
+unsigned char myCVariable;
+// Later, in some function
+myCVariable = 25;
+```
+In your test, you can do this:
+```javascript
+expect(await emulator.getByteValue('myCVariable')).toEqual(25);
+```
