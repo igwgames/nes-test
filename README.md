@@ -18,6 +18,7 @@ If I see people using this I'll be much more likely to carry the project forward
 
 ## Quick Links
 
+- [Downloads](https://github.com/cppchriscpp/nes-test/releases)
 - [API Documentation](https://cppchriscpp.github.io/nes-test/)
 - [Example Usage](https://github.com/cppchriscpp/nes-test/tree/main/examples)
 - [Linux Notes](#special-notes-for-linux)
