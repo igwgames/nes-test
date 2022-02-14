@@ -20,7 +20,8 @@ const tempDir = path.join(os.tmpdir(), 'nes-test'),
 
 /**
  * Controls a NES emulator, allowing you to run it frame-by-frame, and 
- * get values out of it. 
+ * get values out of it. Be aware that almost every method on this is asynchronous, and should
+ * only be called when prefixed with `await`, or you may run into timing issues and emulator crashes!
  */
 class NesEmulator {
 
@@ -130,7 +131,8 @@ return event`;
     }
 
     /**
-     * Run a set number of frames in the emulator before handling further input.
+     * Run a set number of frames in the emulator before handling further input. This can be used to wait for
+     * things like title screen rendering, level updates, etc.
      * @param {Number} value How many frames to execute
      */
     async runCpuFrames(value) {
@@ -138,8 +140,11 @@ return event`;
     }
 
     /**
-     * Press down one or more buttons for the next frame.
-     * @param {object} value An object with keys for any button on the keyboard. Available keys: 
+     * Press down one or more buttons for the next frame. If you need to do this for multiple frames,
+     * you will have to call it multiple times in a loop. Be aware that this command also advances the
+     * emulator one frame.
+     * @param {object} value An object with keys for any button on the keyboard, and a true
+     * or false value. (True is pressed, false is released.) Available keys: 
      * - a
      * - b
      * - up
@@ -148,9 +153,12 @@ return event`;
      * - right
      * - start
      * - select
-     * @param {number} controller Which controller to use. (Default player 1)
+     * @param {number} controller Which controller to use.
      * - 0 (player 1) 
      * - 1 (player 2)
+     * @example
+     * <caption>This will hold the up and a buttons for one frame</caption>
+     * await emulator.sendInput({up: true, a: true})
      */
     async sendInput(value, controller=0) {
         await this.runLua(`emu.setInput(${controller}, ${this.getLuaFormat(value)})`);
@@ -204,7 +212,8 @@ NesTest.writeValue('success', 1)
     /**
      * Given a string key, this will look up the label/variable mapped to the name and return that numeric value. Numeric values will 
      * be returned as-is. Everything else will return null.
-     * @param {Number|String} address Either a numeric address or a string representing an address.
+     * @tutorial Accessing Variables By Name
+    * @param {Number|String} address Either a numeric address or a string representing an address.
      * @throws {Error} An error if a string address is not found in the game's debug file. (Or the file is not present)
      * @returns {Number} A numeric address somewhere in the rom.
      */
@@ -228,9 +237,10 @@ NesTest.writeValue('success', 1)
     }
 
     /**
-     * Get the value of a byte from within the NES memory.
+     * Get the value of a byte from within the NES memory using an address or debug symbol.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @returns {Number} The requested byte.
+     * @tutorial Accessing Variables By Name
      */
     async getByteValue(address) {
         let numAddress = this.getNumericAddress(address);
@@ -241,6 +251,7 @@ NesTest.writeValue('success', 1)
      * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given byte to
+     * @tutorial Accessing Variables By Name
      */
     async setMemoryByteValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -252,6 +263,7 @@ NesTest.writeValue('success', 1)
      * on hardcoded PRG data.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given byte to
+     * @tutorial Accessing Variables By Name
      */
     async setPrgByteValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -262,6 +274,7 @@ NesTest.writeValue('success', 1)
      * Set a byte in ppu memory to a given value.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given byte to.
+     * @tutorial Accessing Variables By Name
      */
     async setPpuByteValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -272,6 +285,7 @@ NesTest.writeValue('success', 1)
      * Get the value of a bytefrom within the PPU memory.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @returns {Number} The requested byte.
+     * @tutorial Accessing Variables By Name
      */
     async getPpuByteValue(address) {
         let numAddress = this.getNumericAddress(address);
@@ -283,6 +297,7 @@ NesTest.writeValue('success', 1)
      * Get the value of a word (two consecutive bytes) from within the NES memory.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @returns {Number} The requested word.
+     * @tutorial Accessing Variables By Name
      */
     async getWordValue(address) {
         let numAddress = this.getNumericAddress(address);
@@ -293,6 +308,7 @@ NesTest.writeValue('success', 1)
      * Get the value of a word (two consecutive bytes) from within the PPU memory.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @returns {Number} The requested word.
+     * @tutorial Accessing Variables By Name
      */
     async getPpuWordValue(address) {
         let numAddress = this.getNumericAddress(address);
@@ -304,6 +320,7 @@ NesTest.writeValue('success', 1)
      * Sets a _memory_ address on the NES to the given value. Note this will have no effect on hardcoded memory addresses.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given word to
+     * @tutorial Accessing Variables By Name
      */
      async setMemoryWordValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -315,6 +332,7 @@ NesTest.writeValue('success', 1)
      * on hardcoded PRG data.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given word to
+     * @tutorial Accessing Variables By Name
      */
     async setPrgWordValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -325,6 +343,7 @@ NesTest.writeValue('success', 1)
      * Set a word in ppu memory to a given value.
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable
      * @param {Number} value The value to set the given word to.
+     * @tutorial Accessing Variables By Name
      */
     async setPpuWordValue(address, value) {
         let numAddress = this.getNumericAddress(address);
@@ -337,6 +356,7 @@ NesTest.writeValue('success', 1)
      * @param {Number|String} address Either a numeric address, or a string representing a C or assembly variable.
      * @param {Number} length How many bytes to include in the sequence.
      * @returns {Number[]} An array with the requested bytes.
+     * @tutorial Accessing Variables By Name
      */
     async getByteRange(address, length) {
         let numAddress = this.getNumericAddress(address);

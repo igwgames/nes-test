@@ -16,10 +16,15 @@ If I see people using this I'll be much more likely to carry the project forward
 * Support for both windows and linux! (Mac support will come if mesen is ever officially supported there)
 * Distributed as a single binary, or an npm module
 
+## Quick Links
+
+- [API Documentation](https://cppchriscpp.github.io/nes-test/)
+- [Example Usage](https://github.com/cppchriscpp/nes-test/tree/main/examples)
+- [Linux Notes](#special-notes-for-linux)
 
 ## Example test
 
-More examples can be found in the `examples/` folder! 
+More examples can be found in [the examples/ folder](https://github.com/cppchriscpp/nes-test/tree/main/examples)! 
 
 ```javascript
 
@@ -55,7 +60,7 @@ it('gameState C variable starts at 0, then is updated after you dismiss the menu
 ```
 
 There are plenty of examples in the [examples/](https://github.com/cppchriscpp/nes-test/tree/main/examples) folder. 
-These may be a good first stop!
+
 
 ## Installation
 
@@ -106,54 +111,7 @@ There are plenty of examples with documentation in the [examples folder](https:/
 
 ## Documentation
 
-I really need to write proper documentation. For now, here's a barebones version.
-
-### NesRom
-
-The NesRom tool allows you to inspect the contents of a rom file. The constructor requires the path to a rom, relative to the current
-test file.
-
-```javascript
-const rom = new NesRom('./roms/rom.nes');
-```
-
-The methods listed in this section can be called on it.
-
-#### hasValidHeader() 
-
-Will return `true` if the header is valid, and the rom size matches what is expected from the number of prg and chr banks specified in 
-the header.
-
-#### getMapper()
-
-Returns the mapper number specified in the header.
-
-#### getMirroring()
-
-Returns the mirroring set in the header, either the string `'horizontal'` or '`vertical'`.
-
-#### getIncludesBatteryBackedRam()
-
-Returns true if the flag for battery backed ram is set in the header, or false if it is not.
-
-#### getIncludesFourScreenVram()
-
-Returns true if the flag for 4 screen vram is set in the header, or false if it is not.
-
-#### raw
-
-The `raw` parameter on the rom contains a UInt8Array of the bytes in the rom, for your inspection.
-
-#### symbols
-
-If there is a `.dbg` file with the same name as the rom in the same folder, this will have a list of 
-all recognized assembly and c symbols parsed from the debug file, mapped to memory addresses. 
-If you have debugging in mesen working, this work with the same file. 
-
-It has two sub-objects: `assembly` and `c`. (The C one will only be populated if you created a game with C debugging
-symbols.)
-
-This is used within NesTestSequence to test ram values at these locations.
+All API methods are documented on [the github pages site](https://cppchriscpp.github.io/nes-test/)
 
 ### NesEmulator
 
@@ -163,25 +121,8 @@ It allows many options, including getting ram and ppu values, sending input, and
 The one constructor parameter is the path to a rom file, relative to the current script file.
 
 ```javascript
-const sequence = new NesTestSequence('./roms/rom.nes');
+const sequence = new NesEmulator('./roms/rom.nes');
 ```
-
-#### runCpuFrames(number)
-
-This tells the emulator to wait a set number cpu frames before running any instructions. This can be used to wait for things like title screen
-rendering, level updates, etc.
-
-#### sendInput(object, controllerNumber = 0)
-
-This tells the emulator to send the input requested for one frame. (If you need multiple frames, use a 
-loop to call this multiple times.)
-
-You should pass an object with `true` or `false` for each button. (Available buttons: `a, b, up, down, left, right, start, select`).
-
-The second parameter is a controller number - it is the first controller (0) by default, but pass 1 for player 2.
-
-Example: `sequence.sendInput({up: true, a: true})`
-This will press the up and a button for one frame.
 
 #### getByteValue(name or address)
 

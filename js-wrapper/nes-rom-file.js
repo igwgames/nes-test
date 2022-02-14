@@ -100,7 +100,7 @@ class NesRomFile {
      * It has two sub-objects: `assembly` and `c`. (The C one will only be populated if you created a game with C debugging
      * symbols.)
 
-     * This is used within NesTestSequence to test ram values at these locations.     
+     * This is used within NesEmulator to test ram values at these locations.     
     */
     get symbols() {
         if (this.debugFile !== null) {

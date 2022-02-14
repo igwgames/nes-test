@@ -14,6 +14,19 @@ module.exports = {
         "destination": "./docs/", 
         "recurse": true,
         "readme": path.join(__dirname, '..', 'README.md'),
-        "template": "./node_modules/clean-jsdoc-theme"
-    },
+        "template": "./node_modules/clean-jsdoc-theme",
+        "tutorials" :"./jsdoc/tutorials",
+        // FIXME: Can we force stuff to start open?
+        "theme_opts": {
+            theme: "light",
+            menu: [
+                {
+                    "title": "Github",
+                    "link": "https://github.com/cppchriscpp/nes-test/",
+                    "target": "_blank"
+                }        
+            ],
+            add_scripts: "console.info('beef'); document.querySelectorAll('.accordion').forEach(e => toggleAccordion(e, true))",
+        }
+    }
 }
