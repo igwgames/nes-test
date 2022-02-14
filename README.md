@@ -12,6 +12,7 @@ If I see people using this I'll be much more likely to carry the project forward
 * Write unit tests using jasmine and javascript
 * Inspect memory locations during game execution
 * Use labels and variables defined in assembly/C when debug information is configured
+* Compare screenshots with expected screenshots
 * Inspect rom file for correctness (header is present, rom length matches header)
 * Support for both windows and linux! (Mac support will come if mesen is ever officially supported there)
 * Distributed as a single binary, or an npm module
