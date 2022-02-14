@@ -23,7 +23,7 @@ If I see people using this I'll be much more likely to carry the project forward
 - [Example Usage](https://github.com/cppchriscpp/nes-test/tree/main/examples)
 - [Linux Notes](#special-notes-for-linux)
 
-## Example test
+## Example tests
 
 More examples can be found in [the examples/ folder](https://github.com/cppchriscpp/nes-test/tree/main/examples)! 
 
@@ -57,11 +57,15 @@ it('gameState C variable starts at 0, then is updated after you dismiss the menu
     // Stop the emulator
     emulator.stop();
 });
-
 ```
 
 There are plenty of examples in the [examples/](https://github.com/cppchriscpp/nes-test/tree/main/examples) folder. 
 
+## What if a test fails?
+
+You will get a list of the failed tests, along with a line number and reason for failure.
+
+![Test Results](./jsdoc/test_output.png)
 
 ## Installation
 
