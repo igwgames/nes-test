@@ -46,8 +46,7 @@
   "pkg": {
     "targets": [
       "node14-win",
-      "node14-linux",
-      "node14-darwin"
+      "node14-linux"
     ],
     "assets": [
       "lua",
