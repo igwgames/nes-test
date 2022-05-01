@@ -228,6 +228,11 @@ NesTest.writeValue('success', 1)
             if (typeof this.nesRomFileWrapper.symbols.assembly[address] !== 'undefined') {
                 return this.nesRomFileWrapper.symbols.assembly[address];
             }
+            // Last ditch effort, try to find a c symbol from assembly, since some variables don't get copied.
+            // See: https://cc65.github.io/mailarchive/2002-12/1875.html
+            if (typeof this.nesRomFileWrapper.symbols.assembly['_' + address] !== 'undefined') {
+                return this.nesRomFileWrapper.symbols.assembly['_' + address];
+            }
             throw new Error('Address name not found in rom: ' + address);
         } else if (typeof address === 'number') {
             return address;
