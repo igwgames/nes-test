@@ -109,9 +109,4 @@ class NesTestJasmineMatchers {
     }
 }
 
-
-beforeAll(() => {
-    NesTestJasmineMatchers.installMatchers();
-});
-
 module.exports = NesTestJasmineMatchers;

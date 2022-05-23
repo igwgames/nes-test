@@ -11,3 +11,8 @@ Module.prototype.require = function(name){
 
   return originalRequire.apply(this, arguments);
 };
+
+beforeAll(() => {
+    require('./jasmine-matchers').installMatchers();
+});
+
