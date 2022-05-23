@@ -1,6 +1,5 @@
 const pixelmatch = require('pixelmatch'),
     path = require('path'),
-    process = require('process'),
     fs = require('fs'),
     pngjs = require('pngjs').PNG,
     getCallingPath = require('./get-calling-path');
@@ -22,7 +21,8 @@ function getImageMatch(actual, expected) {
 /**
  * @alias JasmineMatchers
  * @classdesc
- * Adds matchers to the jasmine object, allowing images to be compared to other images.
+ * Adds matchers to the jasmine object, allowing images to be compared to other images. These extend off of the matchers that
+ * are built into Jasmine. {@link https://jasmine.github.io/api/4.0/matchers Jasmine Matchers}
  */
 class NesTestJasmineMatchers {
 
@@ -58,49 +58,58 @@ class NesTestJasmineMatchers {
      */
 
     static toBeIdenticalToImage(actual, expected) {}
+
+    /**
+     * Install the jasmine matchers in this class using jasmine globals. This must be run before methods such as
+     * expect(a).toBeSimilarToImage(b). (It is automatically run when using the `nes-test` binary.)
+     * @returns Undefined
+     */
+    static installMatchers() {
+        jasmine.addMatchers({
+            toBeSimilarToImage: function(matchersUtil) {
+                return {
+                    compare: function(actual, expected) {
+                        const realCwd = getCallingPath(2);
+                        const resNumber = getImageMatch(actual, path.join(realCwd, expected));
+    
+                        if (resNumber >= 80) {
+                            return {
+                                pass: true
+                            };
+                        } else {
+                            return {
+                                pass: false,
+                                message: "Expected 80% of pixels to be the same, actual percentage was " + resNumber + "%"
+                            }
+                        }
+                    }
+                }
+            },
+            toBeIdenticalToImage: function(matchersUtil) {
+                return {
+                    compare: function(actual, expected) {
+                        const realCwd = getCallingPath(2);
+                        const resNumber = getImageMatch(actual, path.join(realCwd, expected));
+    
+                        if (resNumber === 100) {
+                            return {
+                                pass: true
+                            };
+                        } else {
+                            return {
+                                pass: false,
+                                message: "Expected an exact image match, however the real match was " + resNumber + "%"
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    
+    }
 }
 
 
 beforeAll(() => {
-
-    jasmine.addMatchers({
-        toBeSimilarToImage: function(matchersUtil) {
-            return {
-                compare: function(actual, expected) {
-                    const realCwd = getCallingPath(2);
-                    const resNumber = getImageMatch(actual, path.join(realCwd, expected));
-
-                    if (resNumber >= 80) {
-                        return {
-                            pass: true
-                        };
-                    } else {
-                        return {
-                            pass: false,
-                            message: "Expected 80% of pixels to be the same, actual percentage was " + resNumber + "%"
-                        }
-                    }
-                }
-            }
-        },
-        toBeIdenticalToImage: function(matchersUtil) {
-            return {
-                compare: function(actual, expected) {
-                    const realCwd = getCallingPath(2);
-                    const resNumber = getImageMatch(actual, path.join(realCwd, expected));
-
-                    if (resNumber === 100) {
-                        return {
-                            pass: true
-                        };
-                    } else {
-                        return {
-                            pass: false,
-                            message: "Expected an exact image match, however the real match was " + resNumber + "%"
-                        }
-                    }
-                }
-            }
-        }
-    })
+    NesTestJasmineMatchers.installMatchers();
 });

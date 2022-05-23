@@ -3,7 +3,7 @@ module.exports = {
     "source": {
         "includePattern": ".+\\.js$", 
         "include": ["."],                      
-        "exclude": ["node_modules"]
+        "exclude": ["node_modules", "docs"]
     },
     plugins: [
         "plugins/markdown",
@@ -26,7 +26,7 @@ module.exports = {
                     "target": "_blank"
                 }        
             ],
-            add_scripts: "console.info('beef'); document.querySelectorAll('.accordion').forEach(e => toggleAccordion(e, true))",
+            add_scripts: "document.querySelectorAll('.accordion').forEach(e => toggleAccordion(e, true))",
         }
     }
 }

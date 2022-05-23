@@ -13,7 +13,7 @@
     "test-library": "jasmine --config=library-tests/jasmine.json",
     "test": "npm run test-library && npm run test-examples",
     "build-all": "pkg . --public",
-    "generate-docs": "rm -rf ./docs && jsdoc -c ./jsdoc/jsdoc.conf.js"
+    "generate-docs": "rm -rf ./docs/*.html && jsdoc -c ./jsdoc/jsdoc.conf.js"
   },
   "repository": {
     "type": "git",
