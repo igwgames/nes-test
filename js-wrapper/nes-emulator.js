@@ -419,6 +419,14 @@ NesTest.writeValue('range', '"' .. table.concat(a, ",") .. '"')
             [...(needsMono ? [mesenExe] : []), ...(this.useTestRunner ? ['--testrunner'] : []), ...mesenOptions, this.romFile, this.testFile],
             {cwd: tempDir}
         );
+
+        this.emulatorHandle.stdout.on('data', msg => {
+            console.debug('[Mesen stdout]', msg.toString());
+        });
+
+        this.emulatorHandle.stderr.on('data', msg => {
+            console.debug('[Mesen stderr]', msg.toString());
+        });
         
         this.emulatorHandle.on('error', error => {
             this.started = false;
@@ -431,7 +439,7 @@ NesTest.writeValue('range', '"' .. table.concat(a, ",") .. '"')
             this.emulatorHandle = false;
             if (code !== 0) {
                 this.crashed = true;
-                console.warn('Emulator exited with non-zero code');
+                console.warn('Emulator exited with non-zero code:', code);
             }
         });
 
@@ -469,6 +477,13 @@ NesTest.writeValue('range', '"' .. table.concat(a, ",") .. '"')
      */
     _cleanWinPath(string) {
         return string.replace(/\\/g, '\\\\');
+    }
+
+    /**
+     * Download and prepare the emulator, if required. Not needed if running within nes-test.
+     */
+    async ensureEmulatorAvailable() {
+        return mesen.ensureMesenAvailable();
     }
 }
 
