@@ -8,7 +8,7 @@ const fs = require('fs'),
     getCallingPath = require('../util/get-calling-path'),
     mesen = require('../util/mesen');
 
-const RETRY_LIMIT = 100;
+const RETRY_LIMIT = 200;
 
 // NOTE: YES, the .exe is needed on all operating systems, since it depends on mono.
 const mesenExe = mesen.getMesen();
