@@ -30,11 +30,11 @@ describe('nes-rom-file', () => {
             expect(nesRomFile.hasValidHeader()).toEqual(false);
         });
         it('Resolves to false when the rom length is wrong', () => {
+            const origData = nesRomFile._romData;
             nesRomFile._romData[4] = 16;
             expect(nesRomFile.hasValidHeader()).toEqual(false);
 
             // Add a few bytes on the end and let it fail
-            const origData = nesRomFile._romData;
             nesRomFile._romData = new Uint8Array(origData.length + 5);
             nesRomFile._romData.set(origData);
             expect(nesRomFile.hasValidHeader()).toEqual(false);

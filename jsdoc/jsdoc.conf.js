@@ -16,13 +16,12 @@ module.exports = {
         "readme": path.join(__dirname, '..', 'README.md'),
         "template": "./node_modules/clean-jsdoc-theme",
         "tutorials" :"./jsdoc/tutorials",
-        // FIXME: Can we force stuff to start open?
         "theme_opts": {
             theme: "light",
             menu: [
                 {
                     "title": "Github",
-                    "link": "https://github.com/cppchriscpp/nes-test/",
+                    "link": "https://gh.nes.science/nes-test/",
                     "target": "_blank"
                 }        
             ],

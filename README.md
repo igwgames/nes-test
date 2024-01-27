@@ -19,14 +19,14 @@ If I see people using this I'll be much more likely to carry the project forward
 
 ## Quick Links
 
-- [Downloads](https://github.com/cppchriscpp/nes-test/releases)
-- [API Documentation](https://cppchriscpp.github.io/nes-test/)
-- [Example Usage](https://github.com/cppchriscpp/nes-test/tree/main/examples)
+- [Downloads](https://gh.nes.science/nes-test/releases)
+- [API Documentation](https://nes-test.nes.science)
+- [Example Usage](https://gh.nes.science/nes-test/tree/main/examples)
 - [Linux Notes](#special-notes-for-linux)
 
 ## Example tests
 
-More examples can be found in [the examples/ folder](https://github.com/cppchriscpp/nes-test/tree/main/examples)! 
+More examples can be found in [the examples/ folder](https://gh.nes.science/nes-test/tree/main/examples)! 
 
 ```javascript
 
@@ -60,7 +60,7 @@ it('gameState C variable starts at 0, then is updated after you dismiss the menu
 });
 ```
 
-There are plenty of examples in the [examples/](https://github.com/cppchriscpp/nes-test/tree/main/examples) folder. 
+There are plenty of examples in the [examples/](https://gh.nes.science/nes-test/tree/main/examples) folder. 
 
 ## What if a test fails?
 
@@ -72,7 +72,7 @@ You will get a list of the failed tests, along with a line number and reason for
 
 Download the binary for your operating system from the github releases page.
 
-https://github.com/cppchriscpp/nes-test/releases
+https://gh.nes.science/nes-test/releases
 
 Put this somewhere on your system, then create a folder for your tests. (You can also copy the examples folder from this repo to start!)
 
@@ -91,7 +91,7 @@ test writing. It also installs Mesen automatically, so no manual setup is requir
 
 If you need 0.2, here is a link:
 
-[0.2 version](https://github.com/cppchriscpp/nes-test/tree/v0.2.1)
+[0.2 version](https://gh.nes.science/nes-test/tree/v0.2.1)
 
 
 ### Special notes for linux
@@ -113,11 +113,11 @@ when you first run the tests.
 
 ## Examples
 
-There are plenty of examples with documentation in the [examples folder](https://github.com/cppchriscpp/nes-test/tree/main/examples)
+There are plenty of examples with documentation in the [examples folder](https://gh.nes.science/nes-test/tree/main/examples)
 
 ## Documentation
 
-All API methods are documented on [the github pages site](https://cppchriscpp.github.io/nes-test/)
+All API methods are documented on [the github pages site](https://nes-test.nes.science/)
 
 ## Configuration
 
@@ -140,8 +140,7 @@ There is not much configuration for this module yet, but a few environment varia
 
 ## Contact
 
-This project is run [cppchriscpp](https://twitter.com/cppchriscpp) - feel free to [email me](mailto:chris@cpprograms.net) or 
-send me Twitter messages about this. Alternatively, find me on the VideoGameSage discord in the brewery. 
+Free to [email me](mailto:admin@cpprograms.net) or create Github issues.
 
 I want to hear from you! Also if you'd like to contribute, submit an issue or a PR! I don't have many contribution guidelines (yet!) 
 but if you've got something you want to see, I'm all ears. 

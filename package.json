@@ -1,6 +1,6 @@
 {
   "name": "nes-test",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A simple framework for testing NES roms using jasmine",
   "main": "index.js",
   "bin": "runner.js",
@@ -15,22 +15,13 @@
     "build-all": "pkg . --public",
     "generate-docs": "rm -rf ./docs/*.html && jsdoc -c ./jsdoc/jsdoc.conf.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cppchriscpp/nes-test.git"
-  },
   "keywords": [
     "nes",
     "nintendo",
     "test",
     "rom"
   ],
-  "author": "cppchriscpp",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cppchriscpp/nes-test/issues"
-  },
-  "homepage": "https://github.com/cppchriscpp/nes-test#readme",
   "dependencies": {
     "axios": "^0.26.0",
     "jasmine": "^4.0.2",
